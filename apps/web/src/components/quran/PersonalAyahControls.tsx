@@ -181,24 +181,54 @@ export function PersonalAyahControls({
       </p>
       <div className="mt-3 flex flex-wrap items-center gap-3">
         {featureFlags.bookmarks ? (
-          {featureFlags.readingProgress ? (
-          <button className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--green)] disabled:opacity-50" disabled={status === "loading"} onClick={() => { if (!isAuthenticated) { setShowAccountPrompt(true); return; } void saveAndSync((activeOwnerId) => saveLocalProgress(activeOwnerId, surahNumber, ayahNumber)); }} type="button">Save reading position</button>
+          <button
+            className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--green)] disabled:opacity-50"
+            disabled={status === "loading"}
+            onClick={() => {
+              if (!isAuthenticated) {
+                setShowAccountPrompt(true);
+                return;
+              }
+              void saveAndSync((activeOwnerId) =>
+                saveLocalBookmark(activeOwnerId, surahNumber, ayahNumber, Boolean(bookmark)),
+              );
+            }}
+            type="button"
+          >
+            {bookmark ? "Remove bookmark" : "Save bookmark"}
+          </button>
+        ) : null}
+        {featureFlags.readingProgress ? (
+          <button
+            className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--green)] disabled:opacity-50"
+            disabled={status === "loading"}
+            onClick={() => {
+              if (!isAuthenticated) {
+                setShowAccountPrompt(true);
+                return;
+              }
+              void saveAndSync((activeOwnerId) => saveLocalProgress(activeOwnerId, surahNumber, ayahNumber));
+            }}
+            type="button"
+          >
+            Save reading position
+          </button>
         ) : null}
         {featureFlags.notes ? (
-        <button
-          aria-expanded={isAuthenticated && notesOpen}
-          className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--green)]"
-          onClick={() => {
-            if (!isAuthenticated) {
-              setShowAccountPrompt(true);
-              return;
-            }
-            setNotesOpen((open) => !open);
-          }}
-          type="button"
-        >
-          Notes ({ayahNotes.length})
-        </button>
+          <button
+            aria-expanded={isAuthenticated && notesOpen}
+            className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--green)]"
+            onClick={() => {
+              if (!isAuthenticated) {
+                setShowAccountPrompt(true);
+                return;
+              }
+              setNotesOpen((open) => !open);
+            }}
+            type="button"
+          >
+            Notes ({ayahNotes.length})
+          </button>
         ) : null}
         {featureFlags.notes && isAuthenticated && notesOpen ? (
           <div className="mt-3 w-full min-w-64 space-y-3">
