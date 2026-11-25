@@ -193,11 +193,12 @@ export async function updatePasswordAction(formData: FormData) {
   const password = rawValue(formData, "password");
   if (password.length < 8) redirect("/reset-password?error=invalid-input");
 
+  const client = await createClient();
+  const { data: authData, error: authError } = await client.auth.getUser();
+  if (authError || !authData.user) redirect("/sign-in?error=auth");
+
   let failed = false;
   try {
-    const client = await createClient();
-    const { data: authData, error: authError } = await client.auth.getUser();
-    if (authError || !authData.user) redirect("/sign-in?error=auth");
     const { error } = await client.auth.updateUser({ password });
     failed = Boolean(error);
   } catch {
