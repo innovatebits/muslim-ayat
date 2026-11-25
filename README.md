@@ -6,6 +6,12 @@ Muslim Ayat is a PWA-first Bun workspace for a Quran platform. Quran content is 
 
 > **Content rights:** The selected Quran, translation, transliteration, Surah metadata, tafsir, word-by-word glosses, and header resources are attributed to their sources and checksummed. QUL’s resource pages report copyright information unavailable for the selected resources; rights are therefore recorded as **unknown**, not as public domain or a licence. The repo does not claim redistribution clearance; production operators must complete appropriate rights review.
 
+## Project documentation
+
+- [Architecture](docs/architecture.md)
+- [Product scope](docs/product-scope.md)
+- [Architecture decisions](docs/decisions/README.md)
+
 ## Architecture
 
 - `apps/web` — Next.js App Router, TypeScript, Tailwind CSS, PWA manifest/service worker, and Supabase browser/server client factories.

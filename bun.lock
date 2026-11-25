@@ -47,6 +47,13 @@
       "name": "@muslim-ayat/database",
       "version": "0.1.0",
     },
+    "packages/quran": {
+      "name": "@muslim-ayat/quran",
+      "version": "0.1.0",
+      "devDependencies": {
+        "typescript": "^5.9.3",
+      },
+    },
     "packages/quran-data": {
       "name": "@muslim-ayat/quran-data",
       "version": "0.1.0",
@@ -391,6 +398,8 @@
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.9", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.0.3", "@jridgewell/sourcemap-codec": "^1.4.10" } }, "sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ=="],
 
     "@muslim-ayat/database": ["@muslim-ayat/database@workspace:packages/database"],
+
+    "@muslim-ayat/quran": ["@muslim-ayat/quran@workspace:packages/quran"],
 
     "@muslim-ayat/quran-data": ["@muslim-ayat/quran-data@workspace:packages/quran-data"],
 
