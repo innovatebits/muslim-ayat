@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { updatePasswordAction } from "@/app/actions/auth";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 import { featureFlags } from "@/lib/features";
 
 export const metadata: Metadata = {
@@ -14,6 +16,9 @@ export default async function ResetPasswordPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const { error } = await searchParams;
+  const client = await createClient();
+  const { data: authData, error: authError } = await client.auth.getUser();
+  if (authError || !authData.user) redirect("/sign-in?error=auth");
   if (!featureFlags.authPasswordReset || !featureFlags.authEmailPassword) {
     return <main className="mx-auto max-w-xl px-5 py-16"><p className="text-sm">Password reset is disabled for this deployment.</p><Link href="/sign-in">Return to sign in</Link></main>;
   }
