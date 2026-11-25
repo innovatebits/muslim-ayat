@@ -6,6 +6,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./audio": "./src/audio.ts",
+    "./juz": "./src/juz.ts",
     "./reader": "./src/reader.ts",
     "./study": "./src/study.ts",
     "./study-import": "./src/study-import.ts"

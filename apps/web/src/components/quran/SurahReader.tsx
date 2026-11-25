@@ -35,11 +35,12 @@ export function SurahReader({ surah, previousSurah, nextSurah }: SurahReaderProp
     if (featureFlags.offline) void cachePublicSurah(surah).catch(() => undefined);
     const frame = window.requestAnimationFrame(() => {
       const ayahNumber = Number(window.location.hash.match(/^#ayah-(\d+)$/u)?.[1]);
-      setSelectedAyah(
-        Number.isInteger(ayahNumber) && ayahNumber >= 1 && ayahNumber <= surah.ayahs.length
-          ? ayahNumber
-          : 1,
-      );
+      const isValidAyah =
+        Number.isInteger(ayahNumber) && ayahNumber >= 1 && ayahNumber <= surah.ayahs.length;
+      setSelectedAyah(isValidAyah ? ayahNumber : 1);
+      if (isValidAyah) {
+        document.getElementById(`ayah-${ayahNumber}`)?.scrollIntoView({ block: "start" });
+      }
     });
 
     return () => window.cancelAnimationFrame(frame);
