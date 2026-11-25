@@ -1,6 +1,6 @@
 # Implementation Roadmap
 
-**Status:** Proposed; implementation requires the relevant milestone to be approved.
+**Status:** The selected implementation scope is complete: rights-evidence tracking, Arabic search, and public offline reliability. Resource-specific legal and subject-matter clearance remains open.
 **Source:** `docs/OPEN_SOURCE_REUSE_AUDIT.md`, `docs/architecture.md`, `docs/product-scope.md`, and `apps/web/PRODUCT.md`.
 **Branch:** `feature/open-source-reuse-audit`
 
@@ -16,7 +16,9 @@ Improve the existing Quran-first product in place. Keep the current Bun workspac
 
 This is a governance/release gate, not a reason to stop all work on reader usability or pure algorithms.
 
-- Create a resource-by-resource rights register for Arabic text, translation, transliteration, tafsir, word-by-word glosses, Surah header artwork, and every audio recording/provider.
+**Status:** The evidence tracker is in place; no resource has been marked cleared.
+
+- Maintain [`CONTENT_RIGHTS_REGISTER.md`](CONTENT_RIGHTS_REGISTER.md) as the resource-by-resource tracker for Arabic text, translation, transliteration, tafsir, word-by-word glosses, Surah header artwork, Juz boundaries, and each audio provider/reciter. It records unknowns but does not grant rights.
 - For each resource record: exact edition/version, source and rightsholder, license or written permission, required attribution, permitted display/redistribution, offline/cache permission, commercial-use restrictions, and evidence/review date.
 - Treat unknown or undocumented rights as **not cleared**. Do not infer permission from QUL/CDN availability or from another project's attribution.
 - Do not expand datasets, add reciters, bundle audio, or cache study/audio content until the relevant resource's rights explicitly permit that use.
@@ -43,6 +45,8 @@ This is a governance/release gate, not a reason to stop all work on reader usabi
 
 ### Milestone 2 — Arabic search quality
 
+**Status:** Implemented in `packages/quran-data/src/reader.ts`; canonical Quran text remains unchanged.
+
 **Priority:** P1 · **Estimate:** medium · **Dependency:** no new service or dependency.
 
 - Improve query normalization and relevance scoring in the existing local Quran search implementation.
@@ -60,13 +64,15 @@ This is a governance/release gate, not a reason to stop all work on reader usabi
 
 ### Milestone 3 — dependable public offline experience
 
+**Status:** Implemented in the service worker and offline repository; the duplicate IndexedDB Quran store was removed with a migration that preserves personal records. Cache failures no longer discard successful network responses, and the public cache has a 256-entry FIFO limit.
+
 **Priority:** P1 · **Estimate:** small to medium · **Dependencies:** rights clearance for any additional resource being cached.
 
-- First verify the current service-worker route cache end-to-end; the existing IndexedDB public Surah write path currently has no reader fallback caller.
-- Decide whether the IndexedDB cache should become a deliberate fallback or whether the unused duplicate path should be removed. Do not maintain two cache mechanisms without a clear responsibility.
+- The service-worker route cache was verified end-to-end; the previous IndexedDB public Surah writer had no reader fallback caller.
+- The duplicate IndexedDB Quran cache was removed; Cache Storage owns public reader offline behavior, and the database migration preserves personal stores.
 - Add explicit offline behavior for public study responses only after those resources are cleared for offline caching.
 - Keep public content caches strictly separate from authenticated responses, private notes, bookmarks, profiles, and sync payloads.
-- Add cache versioning, stale-content/update behavior, and bounded storage/eviction behavior appropriate to the chosen strategy.
+- Use cache version `v3`, delete stale Muslim Ayat caches on activation, and cap the public cache at 256 entries by evicting oldest entries.
 
 **Acceptance and tests**
 - A guest can open previously visited public reader content offline.

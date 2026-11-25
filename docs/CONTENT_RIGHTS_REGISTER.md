@@ -1,0 +1,56 @@
+# Content Rights Register
+
+**Status:** Working evidence tracker; this document does not establish or grant any rights.
+
+**Last checked against repository records:** 2026-11-25
+
+Use this register to record evidence and decisions for each content edition or provider. Repository metadata, public availability, checksums, attribution embedded in an asset, and another project's license are not permission. `Unknown` and `review pending` mean **not cleared**. Do not infer permission for display, redistribution, offline storage, or commercial use from one another.
+
+## Current inventory
+
+Every permission below remains unverified unless primary evidence and the required reviews are recorded in the decision record. The source URLs identify the repository's recorded provenance; they are not themselves a license grant.
+
+| Resource | Current edition / source record | Evidence currently recorded in the repository | Rights and attribution status | Required follow-up |
+|---|---|---|---|---|
+| Arabic Quran text | QUL resource 82, “Uthmani Simple (Ayah by Ayah, Hafs, Me-Quran)” — [`quran.json`](../packages/quran-data/src/data/quran.json) | [QUL resource page](https://qul.tarteel.ai/resources/quran-script/82); SHA-256 `4ba768893b3b1ba6e0a0e98621859a4145ec1f1b0f03a459ce9ca07eae018447` | License is absent and `rightsStatus` is `unknown`. Rightsholder, required attribution, display, redistribution, offline/cache, and commercial permissions are not established. | Verify the exact text edition and rightsholder; obtain primary terms/permission and qualified Quran-text review. |
+| English translation | Saheeh International, QUL resource 193 — `translations[saheeh-international]` in [`companions.json`](../packages/quran-data/src/data/companions.json) | [QUL resource page](https://qul.tarteel.ai/resources/translation/193); SHA-256 `57df29716a55f6aa1f17c70f101872303f8b814ab7ba72f76993d9d5e3000750` | License is absent and `rightsStatus` is `unknown`. Translator/publisher, attribution terms, display, redistribution, offline/cache, and commercial permissions are not established. | Verify the specific translation edition, rightsholder, and exact permitted uses; obtain translation subject-matter review. |
+| Transliteration | English Transliteration (Tajweed), QUL resource export — `transliterations[english-transliteration-tajweed]` in [`companions.json`](../packages/quran-data/src/data/companions.json) | [QUL transliteration resource page](https://qul.tarteel.ai/resources/transliteration); SHA-256 `98ce770589a80700dc58e214100e3908b9c3512a47451d1746576de9e846517c` | License is absent and `rightsStatus` is `unknown`. Rightsholder, attribution, display, redistribution, offline/cache, and commercial permissions are not established. | Identify the exact edition/rightsholder and verify its terms separately from Arabic text and translation. |
+| Tafsir | “Abridged Explanation of the Quran,” local export; QUL resource ID and original rightsholder are not independently verified — [`tafsir-source.json`](../packages/quran-data/src/data/tafsir-source.json) | [QUL tafsir catalogue](https://qul.tarteel.ai/resources/tafsir); SHA-256 `8f30054ea8b5f1e19b78fbe2b30cca5998da31583a9902a9b7301cd5e81ea766` | Source metadata says the exact catalogue entry/rightsholder could not be verified; license is absent and `rightsStatus` is `unknown`. All use permissions and attribution terms are unverified. | Identify publisher, translator, edition, and rightsholder; obtain primary permission and qualified tafsir review. |
+| Word-by-word glosses | English Word by Word Translation, QUL resource 92 — [`word-by-word-source.json`](../packages/quran-data/src/data/word-by-word-source.json) | [QUL resource page](https://qul.tarteel.ai/resources/translation/92); SHA-256 `42992eec66ae5dd98659cda9bff9d350def46d953edb2622a8e3a444d56313b9` | Source metadata says the resource page has no copyright information; license is absent and `rightsStatus` is `unknown`. All use permissions and attribution terms are unverified. | Identify the original rightsholder and obtain written terms; review the glosses as companion interpretation, not Quran text. |
+| Surah header artwork | Surah name header SVG collection, QUL resource 592; 113 files for Surahs 2–114 — [`surah-header-source.json`](../packages/quran-data/src/data/surah-header-source.json) | [QUL resource page](https://qul.tarteel.ai/resources/font/surah-name-header-svg); SHA-256 `98e2b41c4e367b49415caaaf4cbc23811371f04966e06696411e8ac62026ce4f` | SVGs credit Naveed Ahmad and Muath Ahmed Ibn-Hassan and state “CC BY 4.0”; QUL's page says copyright information is unavailable. The license grant, attribution requirements, and all use permissions remain unverified; `rightsStatus` is `unknown`. | Verify the grant with the rightsholders and confirm attribution requirements before redistribution or caching. |
+| Juz boundary metadata | Quran.com Content API v4 default Juz metadata, cross-checked against Quran411 — [`juz-boundaries.json`](../packages/quran-data/src/data/juz-boundaries.json) | [Quran.com API endpoint](https://api.quran.com/api/v4/juzs); [Quran411 comparison](https://quran411.com/juz-breakdown); retrieved 2026-11-25 | License is absent and `licenseStatus` is `unknown`. API availability and independent boundary comparison do not establish reuse rights; attribution and all use permissions remain unverified. | Verify terms for the specific boundary data/edition with the source and document permissible use. |
+| Audio — Mishary Rashid Alafasy (`ar.alafasy`) | AlQuran Cloud CDN; external streaming, 128 kbps catalogue entry — [`audio.ts`](../packages/quran-data/src/audio.ts) | [CDN documentation](https://alquran.cloud/cdn); provider origin `https://cdn.islamic.network` | `rightsStatus` is `unknown`. Recording and performer rights, attribution, stream/display, redistribution, offline/cache, and commercial permissions are not established for the recording set. | Verify provider terms and recording/performance permissions for this reciter and the specific recordings. |
+| Audio — Mahmoud Khalil Al-Husary (`ar.husary`) | AlQuran Cloud CDN; external streaming, 128 kbps catalogue entry — [`audio.ts`](../packages/quran-data/src/audio.ts) | [CDN documentation](https://alquran.cloud/cdn); provider origin `https://cdn.islamic.network` | `rightsStatus` is `unknown`. Recording and performer rights, attribution, stream/display, redistribution, offline/cache, and commercial permissions are not established for the recording set. | Verify provider terms and recording/performance permissions for this reciter and the specific recordings. |
+| Audio — Mohamed Siddiq al-Minshawi (`ar.minshawi`) | AlQuran Cloud CDN; external streaming, 128 kbps catalogue entry — [`audio.ts`](../packages/quran-data/src/audio.ts) | [CDN documentation](https://alquran.cloud/cdn); provider origin `https://cdn.islamic.network` | `rightsStatus` is `unknown`. Recording and performer rights, attribution, stream/display, redistribution, offline/cache, and commercial permissions are not established for the recording set. | Verify provider terms and recording/performance permissions for this reciter and the specific recordings. |
+| Audio — Abdul Rahman Al-Sudais (`ar.sudais`) | AlQuran Cloud CDN; external streaming, 192 kbps catalogue entry — [`audio.ts`](../packages/quran-data/src/audio.ts) | [CDN documentation](https://alquran.cloud/cdn); provider origin `https://cdn.islamic.network` | `rightsStatus` is `unknown`. Recording and performer rights, attribution, stream/display, redistribution, offline/cache, and commercial permissions are not established for the recording set. | Verify provider terms and recording/performance permissions for this reciter and the specific recordings. |
+| Audio — Abdul Basit Abdul Samad (`ar.abdulbasit`) | AlQuran Cloud CDN; external streaming, 192 kbps catalogue entry — [`audio.ts`](../packages/quran-data/src/audio.ts) | [CDN documentation](https://alquran.cloud/cdn); provider origin `https://cdn.islamic.network` | `rightsStatus` is `unknown`. Recording and performer rights, attribution, stream/display, redistribution, offline/cache, and commercial permissions are not established for the recording set. | Verify provider terms and recording/performance permissions for this reciter and the specific recordings. |
+
+## Evidence and decision workflow
+
+1. Keep a separate entry for each edition, asset collection, audio provider, and reciter/recording scope. Split entries when the rightsholder, terms, version, or permitted use differs.
+2. Record the exact edition/version, source, rightsholder, and the repository asset or metadata record. Preserve a checksum for locally stored files where available.
+3. Obtain primary-source license terms or written permission. Record a stable URL or evidence reference, the date checked, and a retained copy/hash where appropriate. A catalogue listing, API/CDN availability, or another project's attribution is not permission.
+4. Record each permitted act independently: public display/streaming, redistribution/bundling, offline storage/cache, and commercial use. Record territorial, duration, and other restrictions if present. Enter `Unknown` until the evidence answers the question.
+5. Copy the required attribution text exactly from the authoritative terms. Record any attribution already embedded in an asset separately from verified obligations.
+6. Obtain legal review for rights/licensing and qualified subject-matter review for Quran text, translation, transliteration, tafsir, or glosses as applicable. Record reviewer role, date, scope, and outcome; a review request or pending review is not clearance.
+7. Mark a resource `Cleared` only for the specific uses and version supported by evidence and review. Otherwise keep it `Unknown`, `Evidence collected — review pending`, or `Not permitted`. Re-review after a source, version, provider, or intended use changes.
+8. Before adding distribution or caching behavior, confirm the applicable resource's recorded decision explicitly permits that use. Do not use this tracker to infer that existing production use is legally cleared.
+
+## Decision record template
+
+Duplicate and complete this record for each resource when evidence or a decision is obtained. Leave unknown fields explicitly marked; do not fill them from assumptions.
+
+| Field | Record |
+|---|---|
+| Resource ID, edition/version, and checksum (if applicable) | Not yet recorded |
+| Rightsholder and source authority | Not yet verified |
+| Primary license / written permission and evidence URL or reference | Not yet obtained |
+| Evidence checked on; retained evidence location/hash | Not yet recorded |
+| Required attribution text and where it must appear | Not yet verified |
+| Public display/streaming permission and scope | Unknown — not cleared |
+| Redistribution/bundling permission and scope | Unknown — not cleared |
+| Offline/cache permission and scope | Unknown — not cleared |
+| Commercial-use permission and restrictions | Unknown — not cleared |
+| Legal reviewer, review date, and decision | Pending |
+| Subject-matter reviewer, review date, and decision (if applicable) | Pending |
+| Final status, approved uses, restrictions, and re-review trigger | Unknown — not cleared |

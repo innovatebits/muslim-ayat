@@ -1,20 +1,12 @@
-import type { QuranReaderSurah } from "@muslim-ayat/quran-data/reader";
 import {
   PersonalSyncOperationSchema,
   type PersonalSyncOperation,
 } from "@muslim-ayat/shared";
 
 export const OFFLINE_DATABASE_NAME = "muslim-ayat-offline-v1";
-const DATABASE_VERSION = 1;
+const DATABASE_VERSION = 2;
 
-type StoreName = "publicQuran" | "bookmarks" | "notes" | "progress" | "outbox";
-
-export interface OfflineQuranContent {
-  key: string;
-  surahNumber: number;
-  content: QuranReaderSurah;
-  cachedAt: string;
-}
+type StoreName = "bookmarks" | "notes" | "progress" | "outbox";
 
 export interface OfflineBookmarkRecord {
   key: string;
@@ -67,8 +59,8 @@ function openDatabase(): Promise<IDBDatabase> {
     const request = indexedDB.open(OFFLINE_DATABASE_NAME, DATABASE_VERSION);
     request.onupgradeneeded = () => {
       const database = request.result;
-      if (!database.objectStoreNames.contains("publicQuran")) {
-        database.createObjectStore("publicQuran", { keyPath: "key" });
+      if (database.objectStoreNames.contains("publicQuran")) {
+        database.deleteObjectStore("publicQuran");
       }
       if (!database.objectStoreNames.contains("bookmarks")) {
         const bookmarks = database.createObjectStore("bookmarks", { keyPath: "key" });
@@ -157,26 +149,6 @@ function queueRecord<T>(
       transaction.objectStore(store).put(record);
       setResult(record);
     };
-  });
-}
-
-export function cachePublicSurah(content: QuranReaderSurah) {
-  const record: OfflineQuranContent = {
-    key: `surah:${content.number}`,
-    surahNumber: content.number,
-    content,
-    cachedAt: now(),
-  };
-  return runTransaction(["publicQuran"], "readwrite", (transaction, setResult) => {
-    transaction.objectStore("publicQuran").put(record);
-    setResult(record);
-  });
-}
-
-export function getCachedPublicSurah(surahNumber: number): Promise<OfflineQuranContent | undefined> {
-  return runTransaction(["publicQuran"], "readonly", (transaction, setResult) => {
-    const request = transaction.objectStore("publicQuran").get(`surah:${surahNumber}`);
-    request.onsuccess = () => setResult(request.result as OfflineQuranContent | undefined);
   });
 }
 

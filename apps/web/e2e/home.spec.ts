@@ -237,23 +237,21 @@ test("guest reading works offline and personal saves ask for sign-in without blo
   expect(publicStudyResponse.ok()).toBe(true);
 
   await page.waitForFunction(async () => {
-    const database = await new Promise<IDBDatabase>((resolve, reject) => {
-      const request = indexedDB.open("muslim-ayat-offline-v1");
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
-    const record = await new Promise<{ content?: { ayahs?: unknown[] } } | undefined>((resolve, reject) => {
-      const request = database.transaction("publicQuran").objectStore("publicQuran").get("surah:1");
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
-    database.close();
-    return Boolean(record?.content?.ayahs?.length);
+    const cache = await caches.open("muslim-ayat-public-v3");
+    const requests = await cache.keys();
+    return requests.some((request) => new URL(request.url).pathname === "/surah/1");
   });
 
   await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
+  await page.goto("/surah/2");
+  await expect(page.getByRole("heading", { name: "Al-Baqarah" })).toBeVisible();
+  await page.waitForFunction(async () => {
+    const cache = await caches.open("muslim-ayat-public-v3");
+    const requests = await cache.keys();
+    return requests.some((request) => new URL(request.url).pathname === "/surah/2");
+  });
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Al-Fātiĥah" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Al-Baqarah" })).toBeVisible();
   await context.setOffline(true);
   await page.getByRole("button", { name: "Save bookmark" }).click();
   await expect(page.getByText("Sign in to save the personal features enabled on this deployment across devices.")).toBeVisible();
@@ -262,6 +260,11 @@ test("guest reading works offline and personal saves ask for sign-in without blo
   await expect(page.getByText("Sign in to save the personal features enabled on this deployment across devices.")).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Remove bookmark" })).toHaveCount(0);
   const personalRecordCounts = await page.evaluate(async () => {
+    const databases = await indexedDB.databases();
+    if (!databases.some((database) => database.name === "muslim-ayat-offline-v1")) {
+      return [0, 0, 0, 0];
+    }
+
     const database = await new Promise<IDBDatabase>((resolve, reject) => {
       const request = indexedDB.open("muslim-ayat-offline-v1");
       request.onsuccess = () => resolve(request.result);
@@ -278,13 +281,17 @@ test("guest reading works offline and personal saves ask for sign-in without blo
     return counts;
   });
   expect(personalRecordCounts).toEqual([0, 0, 0, 0]);
-  await page.goto("/surah/1");
-  await expect(page.getByRole("heading", { name: "Al-Fātiĥah" })).toBeVisible();
-  await expect(page.getByText("Bismil laahir Rahmaanir Raheem")).toBeVisible();
+  await page.goto("/surah/2");
+  await expect(page.getByRole("heading", { name: "Al-Baqarah" })).toBeVisible();
   await context.setOffline(false);
 });
 
 test("registers the service worker and precaches the public offline shell", async ({ page }) => {
+  await page.goto("/offline.html");
+  await page.evaluate(async () => {
+    await caches.open("muslim-ayat-public-v1");
+    await caches.open("unrelated-cache");
+  });
   await page.goto("/");
 
   await page.waitForFunction(async () => {
@@ -296,7 +303,7 @@ test("registers the service worker and precaches the public offline shell", asyn
     );
     if (!appRegistration) return false;
 
-    const cache = await caches.open("muslim-ayat-public-v2");
+    const cache = await caches.open("muslim-ayat-public-v3");
     const requests = await cache.keys();
     return requests.some((request) => new URL(request.url).pathname === "/offline.html");
   });
@@ -306,20 +313,27 @@ test("registers the service worker and precaches the public offline shell", asyn
     return registrations.some((registration) => registration.active?.scriptURL.endsWith("/sw.js"));
   });
   await page.waitForFunction(() => navigator.serviceWorker.controller?.scriptURL.endsWith("/sw.js"));
+  await page.waitForFunction(async () => {
+    const cacheNames = await caches.keys();
+    return cacheNames.includes("unrelated-cache") && !cacheNames.includes("muslim-ayat-public-v1");
+  });
 
   await page.goto("/quran");
   const publicCachedPaths = await page.evaluate(async () => {
-    const cache = await caches.open("muslim-ayat-public-v2");
+    const cache = await caches.open("muslim-ayat-public-v3");
     return (await cache.keys()).map((request) => new URL(request.url).pathname.replace(/\/$/u, ""));
   });
   expect(publicCachedPaths).toContain("/quran");
   expect(publicCachedPaths).toContain("/surah/1");
+  const studyStatus = await page.evaluate(async () => (await fetch("/api/study/2/181")).status);
+  expect(studyStatus).toBe(200);
   await page.goto("/account");
   const cachedPaths = await page.evaluate(async () => {
-    const cache = await caches.open("muslim-ayat-public-v2");
+    const cache = await caches.open("muslim-ayat-public-v3");
     return (await cache.keys()).map((request) => new URL(request.url).pathname.replace(/\/$/u, ""));
   });
   expect(cachedPaths).toContain("/quran");
   expect(cachedPaths).toContain("/surah/1");
   expect(cachedPaths).not.toContain("/account");
+  expect(cachedPaths).not.toContain("/api/study/2/181");
 });

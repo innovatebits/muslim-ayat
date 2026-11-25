@@ -169,19 +169,33 @@ function normalizeSearch(value: string) {
   return value
     .normalize("NFKC")
     .toLocaleLowerCase("en")
-    .replace(/[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06ed]/gu, "")
+    .replace(/\p{M}/gu, "")
+    .replace(/\u0640/gu, "")
+    .replace(/[أإآٱ]/gu, "ا")
+    .replace(/ؤ/gu, "و")
+    .replace(/ئ/gu, "ي")
+    .replace(/ء/gu, "")
+    .replace(/ى/gu, "ي")
+    .replace(/ة/gu, "ه")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
     .replace(/\s+/gu, " ")
     .trim();
 }
 
-export function searchQuran(query: string, limit = 50): QuranSearchResult[] {
-  const normalizedQuery = normalizeSearch(query);
-  if (!normalizedQuery) return [];
+interface QuranSearchIndexEntry {
+  result: QuranSearchResult;
+  searchableFields: [string, string, string];
+  position: number;
+}
 
-  const safeLimit = Number.isFinite(limit) ? Math.min(Math.max(Math.floor(limit), 1), 100) : 50;
-  const results: QuranSearchResult[] = [];
+function buildSearchIndex(): QuranSearchIndexEntry[] {
   const translation = getResource(companions.translations, "saheeh-international");
-  const transliteration = getResource(companions.transliterations, "english-transliteration-tajweed");
+  const transliteration = getResource(
+    companions.transliterations,
+    "english-transliteration-tajweed",
+  );
+  const searchIndex: QuranSearchIndexEntry[] = [];
+  let position = 0;
 
   for (const surah of corpus.surahs) {
     const summary = getSurahSummary(surah.number);
@@ -191,26 +205,71 @@ export function searchQuran(query: string, limit = 50): QuranSearchResult[] {
       const verseKey = `${surah.number}:${ayah.number}`;
       const translationText = translation?.verses[verseKey] ?? null;
       const transliterationText = transliteration?.verses[verseKey] ?? null;
-      const searchableText = [ayah.textUthmani, translationText, transliterationText]
-        .filter((value): value is string => value !== null)
-        .some((value) => normalizeSearch(value).includes(normalizedQuery));
 
-      if (searchableText) {
-        results.push({
+      searchIndex.push({
+        result: {
           surahNumber: surah.number,
           surahName: summary.nameTransliteration,
           ayahNumber: ayah.number,
           textUthmani: ayah.textUthmani,
           translation: translationText,
           transliteration: transliterationText,
-        });
-      }
-
-      if (results.length >= safeLimit) return results;
+        },
+        searchableFields: [
+          normalizeSearch(ayah.textUthmani),
+          normalizeSearch(translationText ?? ""),
+          normalizeSearch(transliterationText ?? ""),
+        ],
+        position,
+      });
+      position += 1;
     }
   }
 
-  return results;
+  return searchIndex;
+}
+
+const searchIndex = buildSearchIndex();
+
+function scoreSearchField(
+  normalizedValue: string,
+  normalizedQuery: string,
+  queryTokens: string[],
+) {
+  if (!normalizedValue) return 0;
+  if (normalizedValue === normalizedQuery) return 4;
+  const paddedValue = ` ${normalizedValue} `;
+  if (paddedValue.includes(` ${normalizedQuery} `)) return 3;
+  if (normalizedValue.includes(normalizedQuery)) return 2;
+  if (queryTokens.length === 1) return 0;
+
+  return queryTokens.every((token) => paddedValue.includes(` ${token} `)) ? 1 : 0;
+}
+
+export function searchQuran(query: string, limit = 50): QuranSearchResult[] {
+  const normalizedQuery = normalizeSearch(query);
+  if (!normalizedQuery) return [];
+
+  const safeLimit = Number.isFinite(limit) ? Math.min(Math.max(Math.floor(limit), 1), 100) : 50;
+  const queryTokens = normalizedQuery.split(" ");
+  const results: { entry: QuranSearchIndexEntry; score: number }[] = [];
+
+  for (const entry of searchIndex) {
+    const score = Math.max(
+      scoreSearchField(entry.searchableFields[0], normalizedQuery, queryTokens),
+      scoreSearchField(entry.searchableFields[1], normalizedQuery, queryTokens),
+      scoreSearchField(entry.searchableFields[2], normalizedQuery, queryTokens),
+    );
+
+    if (score > 0) results.push({ entry, score });
+  }
+
+  return results
+    .sort(
+      (left, right) => right.score - left.score || left.entry.position - right.entry.position,
+    )
+    .slice(0, safeLimit)
+    .map(({ entry }) => ({ ...entry.result }));
 }
 
 export function getContentSources(): QuranContentSource[] {

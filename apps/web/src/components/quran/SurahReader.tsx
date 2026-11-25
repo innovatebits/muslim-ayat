@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AyahAudioPlayer } from "@/components/audio/AyahAudioPlayer";
 import type { QuranReaderSurah, QuranSurahSummary } from "@muslim-ayat/quran-data/reader";
-import { cachePublicSurah } from "@/lib/offline/repository";
 import { PersonalAyahControls } from "./PersonalAyahControls";
 import { StudyAid } from "./StudyAid";
 import { useReaderPreferences } from "./ReaderPreferences";
@@ -32,7 +31,6 @@ export function SurahReader({ surah, previousSurah, nextSurah }: SurahReaderProp
   }
 
   useEffect(() => {
-    if (featureFlags.offline) void cachePublicSurah(surah).catch(() => undefined);
     const frame = window.requestAnimationFrame(() => {
       const ayahNumber = Number(window.location.hash.match(/^#ayah-(\d+)$/u)?.[1]);
       const isValidAyah =

@@ -83,4 +83,55 @@ describe("Quran reader data access", () => {
     });
     expect(searchQuran("   ")).toEqual([]);
   });
+
+  it("handles punctuation-only queries and the default result limit", () => {
+    expect(searchQuran("!!!")).toEqual([]);
+    expect(searchQuran("الله")).toHaveLength(50);
+  });
+
+  it("normalizes Arabic input variants for matching only", () => {
+    const cases = [
+      { query: "الْحَمْدُ", surahNumber: 1, ayahNumber: 2 },
+      { query: "الـحمد", surahNumber: 1, ayahNumber: 2 },
+      { query: "إياك نعبد", surahNumber: 1, ayahNumber: 5 },
+      { query: "بالآخرة", surahNumber: 2, ayahNumber: 4 },
+    ];
+
+    for (const testCase of cases) {
+      expect(searchQuran(testCase.query, 100)).toContainEqual(
+        expect.objectContaining({
+          surahNumber: testCase.surahNumber,
+          ayahNumber: testCase.ayahNumber,
+        }),
+      );
+    }
+  });
+
+  it("ranks exact and phrase matches stably", () => {
+    const phraseResults = searchQuran("الرحمن الرحيم", 100);
+    const firstOccurrence = phraseResults.findIndex(
+      (result) => result.surahNumber === 1 && result.ayahNumber === 1,
+    );
+    const secondOccurrence = phraseResults.findIndex(
+      (result) => result.surahNumber === 2 && result.ayahNumber === 163,
+    );
+
+    expect(phraseResults[0]).toMatchObject({ surahNumber: 1, ayahNumber: 3 });
+    expect(firstOccurrence).toBeLessThan(secondOccurrence);
+    expect(searchQuran("العلمين الحمد", 100)).toContainEqual(
+      expect.objectContaining({ surahNumber: 1, ayahNumber: 2 }),
+    );
+    expect(searchQuran("الرحمن الرحيم", 1)[0]).toMatchObject({
+      surahNumber: 1,
+      ayahNumber: 3,
+    });
+  });
+
+  it("preserves canonical text after normalized search", () => {
+    const canonicalText = getSurah(1)?.ayahs[4]?.textUthmani;
+    const result = searchQuran("إياك نعبد")[0];
+
+    expect(result?.textUthmani).toBe(canonicalText);
+    expect(getSurah(1)?.ayahs[4]?.textUthmani).toBe(canonicalText);
+  });
 });
