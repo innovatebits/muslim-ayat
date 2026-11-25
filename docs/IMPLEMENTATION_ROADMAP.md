@@ -28,6 +28,8 @@ This is a governance/release gate, not a reason to stop all work on reader usabi
 
 ### Milestone 1 — core Quran navigation: Juz
 
+**Status:** Implemented; boundary-data rights and provenance still require verification.
+
 **Priority:** P1 · **Estimate:** medium · **Dependency:** verified, provenance-recorded Juz boundary data.
 
 - Add a typed Juz boundary model and pure lookup/validation helpers to the existing Quran domain/content boundaries; do not create a new package.

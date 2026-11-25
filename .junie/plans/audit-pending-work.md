@@ -61,3 +61,8 @@ Local search handles Arabic input more usefully while canonical text remains byt
 Public reader caching is verified end-to-end and the unused IndexedDB path is deliberately resolved.
 - Inspect service worker and cache implementation; test online/offline behavior, lifecycle, and isolation.
 - Wire or remove the IndexedDB Quran cache path based on repository evidence; do not add study-response caching absent rights clearance.
+
+### ✓ Step 7: Reconcile the audit with completed implementation
+The audit accurately distinguishes implemented work from outstanding rights and conditional product decisions.
+- Update stale Juz, local-search, and public-reader offline status claims using the current implementation and roadmap.
+- Preserve the rights-clearance and rights-gated study/audio offline gaps; keep reader comfort and reading goals explicitly conditional.
