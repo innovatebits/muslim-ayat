@@ -34,7 +34,8 @@ function revalidatePersonalViews(surahNumber?: number) {
   if (surahNumber) revalidatePath(`/surah/${surahNumber}`);
 }
 
-export async function updateProfileAction(formData: FormData) {\n  if (!isFeatureEnabled("accountProfile")) redirect("/account?error=feature-disabled");
+export async function updateProfileAction(formData: FormData) {
+  if (!isFeatureEnabled("accountProfile")) redirect("/account?error=feature-disabled");
   const parsed = ProfilePreferencesSchema.safeParse({
     preferredLanguage: getString(formData, "preferredLanguage"),
   });
@@ -50,7 +51,8 @@ export async function updateProfileAction(formData: FormData) {\n  if (!isFeatur
   revalidatePersonalViews();
 }
 
-export async function deleteBookmarkAction(formData: FormData) {\n  if (!isFeatureEnabled("bookmarks")) redirect("/bookmarks?error=feature-disabled");
+export async function deleteBookmarkAction(formData: FormData) {
+  if (!isFeatureEnabled("bookmarks")) redirect("/bookmarks?error=feature-disabled");
   const recordId = PersonalRecordIdSchema.safeParse({ id: getString(formData, "id") });
   if (!recordId.success) redirect("/bookmarks?error=invalid");
 
@@ -78,7 +80,8 @@ export async function deleteBookmarkAction(formData: FormData) {\n  if (!isFeatu
   revalidatePersonalViews(bookmark?.surah_number);
 }
 
-export async function deleteNoteAction(formData: FormData) {\n  if (!isFeatureEnabled("notes")) redirect("/bookmarks?error=feature-disabled");
+export async function deleteNoteAction(formData: FormData) {
+  if (!isFeatureEnabled("notes")) redirect("/bookmarks?error=feature-disabled");
   const recordId = PersonalRecordIdSchema.safeParse({ id: getString(formData, "id") });
   if (!recordId.success) redirect("/account?error=invalid");
 
