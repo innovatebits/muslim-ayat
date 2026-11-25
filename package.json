@@ -1,0 +1,45 @@
+{
+  "name": "muslim-ayat",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "bun@1.4.5",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --filter=@muslim-ayat/web",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e --filter=@muslim-ayat/web",
+    "import:quran-data": "bun run scripts/import-qul-quran-data.ts",
+    "import:quran-companions": "bun run scripts/import-qul-companions.ts",
+    "import:quran-metadata": "bun run scripts/import-qul-surah-metadata.ts",
+    "import:quran-surah-headers": "bun run scripts/import-qul-surah-headers.ts",
+    "import:quran-study": "bun run scripts/import-qul-study.ts",
+    "generate:pwa-icons": "bun run scripts/generate-pwa-icons.ts",
+    "validate:quran-data": "bun run scripts/validate-quran-data.ts",
+    "generate:quran-index": "bun run scripts/generate-quran-index.ts",
+    "cf:build": "bun run --cwd apps/web cf:build",
+    "cf:preview": "bun run --cwd apps/web cf:preview",
+    "cf:deploy": "bun run --cwd apps/web cf:deploy",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "fflate": "^0.8.3",
+    "prettier": "^3.5.3",
+    "sharp": "^0.35.5",
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2"
+  }
+}

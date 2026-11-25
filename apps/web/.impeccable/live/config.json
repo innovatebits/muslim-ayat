@@ -1,0 +1,6 @@
+{
+  "files": ["src/app/layout.tsx", "public/offline.html"],
+  "insertBefore": "</body>",
+  "commentSyntax": "jsx",
+  "cspChecked": true
+}

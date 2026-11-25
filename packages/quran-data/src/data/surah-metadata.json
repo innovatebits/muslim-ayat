@@ -1,0 +1,1153 @@
+{
+  "source": {
+    "source": "Quranic Universal Library (QUL)",
+    "edition": "Surah names - quran-metadata (Surah by Surah), resource 70",
+    "license": null,
+    "rightsStatus": "unknown",
+    "url": "https://qul.tarteel.ai/resources/quran-metadata/70",
+    "sha256": "ada09f674efd35d0c054c9b81c98d14550f6c66b77767a9173674799f675d7de",
+    "verifiedAt": "2026-11-24T21:16:27.036Z"
+  },
+  "surahs": [
+    {
+      "number": 1,
+      "nameTransliteration": "Al-Fātiĥah",
+      "nameSimple": "Al-Fatihah",
+      "nameArabic": "الفاتحة",
+      "revelationOrder": 5,
+      "revelationPlace": "makkah",
+      "ayahCount": 7,
+      "bismillahPre": false
+    },
+    {
+      "number": 2,
+      "nameTransliteration": "Al-Baqarah",
+      "nameSimple": "Al-Baqarah",
+      "nameArabic": "البقرة",
+      "revelationOrder": 87,
+      "revelationPlace": "madinah",
+      "ayahCount": 286,
+      "bismillahPre": true
+    },
+    {
+      "number": 3,
+      "nameTransliteration": "Āli `Imrān",
+      "nameSimple": "Ali 'Imran",
+      "nameArabic": "آل عمران",
+      "revelationOrder": 89,
+      "revelationPlace": "madinah",
+      "ayahCount": 200,
+      "bismillahPre": true
+    },
+    {
+      "number": 4,
+      "nameTransliteration": "An-Nisā",
+      "nameSimple": "An-Nisa",
+      "nameArabic": "النساء",
+      "revelationOrder": 92,
+      "revelationPlace": "madinah",
+      "ayahCount": 176,
+      "bismillahPre": true
+    },
+    {
+      "number": 5,
+      "nameTransliteration": "Al-Mā'idah",
+      "nameSimple": "Al-Ma'idah",
+      "nameArabic": "المائدة",
+      "revelationOrder": 112,
+      "revelationPlace": "madinah",
+      "ayahCount": 120,
+      "bismillahPre": true
+    },
+    {
+      "number": 6,
+      "nameTransliteration": "Al-'An`ām",
+      "nameSimple": "Al-An'am",
+      "nameArabic": "الأنعام",
+      "revelationOrder": 55,
+      "revelationPlace": "makkah",
+      "ayahCount": 165,
+      "bismillahPre": true
+    },
+    {
+      "number": 7,
+      "nameTransliteration": "Al-'A`rāf",
+      "nameSimple": "Al-A'raf",
+      "nameArabic": "الأعراف",
+      "revelationOrder": 39,
+      "revelationPlace": "makkah",
+      "ayahCount": 206,
+      "bismillahPre": true
+    },
+    {
+      "number": 8,
+      "nameTransliteration": "Al-'Anfāl",
+      "nameSimple": "Al-Anfal",
+      "nameArabic": "الأنفال",
+      "revelationOrder": 88,
+      "revelationPlace": "madinah",
+      "ayahCount": 75,
+      "bismillahPre": true
+    },
+    {
+      "number": 9,
+      "nameTransliteration": "At-Tawbah",
+      "nameSimple": "At-Tawbah",
+      "nameArabic": "التوبة",
+      "revelationOrder": 113,
+      "revelationPlace": "madinah",
+      "ayahCount": 129,
+      "bismillahPre": false
+    },
+    {
+      "number": 10,
+      "nameTransliteration": "Yūnus",
+      "nameSimple": "Yunus",
+      "nameArabic": "يونس",
+      "revelationOrder": 51,
+      "revelationPlace": "makkah",
+      "ayahCount": 109,
+      "bismillahPre": true
+    },
+    {
+      "number": 11,
+      "nameTransliteration": "Hūd",
+      "nameSimple": "Hud",
+      "nameArabic": "هود",
+      "revelationOrder": 52,
+      "revelationPlace": "makkah",
+      "ayahCount": 123,
+      "bismillahPre": true
+    },
+    {
+      "number": 12,
+      "nameTransliteration": "Yūsuf",
+      "nameSimple": "Yusuf",
+      "nameArabic": "يوسف",
+      "revelationOrder": 53,
+      "revelationPlace": "makkah",
+      "ayahCount": 111,
+      "bismillahPre": true
+    },
+    {
+      "number": 13,
+      "nameTransliteration": "Ar-Ra`d",
+      "nameSimple": "Ar-Ra'd",
+      "nameArabic": "الرعد",
+      "revelationOrder": 96,
+      "revelationPlace": "madinah",
+      "ayahCount": 43,
+      "bismillahPre": true
+    },
+    {
+      "number": 14,
+      "nameTransliteration": "Ibrāhīm",
+      "nameSimple": "Ibrahim",
+      "nameArabic": "ابراهيم",
+      "revelationOrder": 72,
+      "revelationPlace": "makkah",
+      "ayahCount": 52,
+      "bismillahPre": true
+    },
+    {
+      "number": 15,
+      "nameTransliteration": "Al-Ĥijr",
+      "nameSimple": "Al-Hijr",
+      "nameArabic": "الحجر",
+      "revelationOrder": 54,
+      "revelationPlace": "makkah",
+      "ayahCount": 99,
+      "bismillahPre": true
+    },
+    {
+      "number": 16,
+      "nameTransliteration": "An-Naĥl",
+      "nameSimple": "An-Nahl",
+      "nameArabic": "النحل",
+      "revelationOrder": 70,
+      "revelationPlace": "makkah",
+      "ayahCount": 128,
+      "bismillahPre": true
+    },
+    {
+      "number": 17,
+      "nameTransliteration": "Al-'Isrā",
+      "nameSimple": "Al-Isra",
+      "nameArabic": "الإسراء",
+      "revelationOrder": 50,
+      "revelationPlace": "makkah",
+      "ayahCount": 111,
+      "bismillahPre": true
+    },
+    {
+      "number": 18,
+      "nameTransliteration": "Al-Kahf",
+      "nameSimple": "Al-Kahf",
+      "nameArabic": "الكهف",
+      "revelationOrder": 69,
+      "revelationPlace": "makkah",
+      "ayahCount": 110,
+      "bismillahPre": true
+    },
+    {
+      "number": 19,
+      "nameTransliteration": "Maryam",
+      "nameSimple": "Maryam",
+      "nameArabic": "مريم",
+      "revelationOrder": 44,
+      "revelationPlace": "makkah",
+      "ayahCount": 98,
+      "bismillahPre": true
+    },
+    {
+      "number": 20,
+      "nameTransliteration": "Ţāhā",
+      "nameSimple": "Taha",
+      "nameArabic": "طه",
+      "revelationOrder": 45,
+      "revelationPlace": "makkah",
+      "ayahCount": 135,
+      "bismillahPre": true
+    },
+    {
+      "number": 21,
+      "nameTransliteration": "Al-'Anbyā",
+      "nameSimple": "Al-Anbya",
+      "nameArabic": "الأنبياء",
+      "revelationOrder": 73,
+      "revelationPlace": "makkah",
+      "ayahCount": 112,
+      "bismillahPre": true
+    },
+    {
+      "number": 22,
+      "nameTransliteration": "Al-Ĥajj",
+      "nameSimple": "Al-Hajj",
+      "nameArabic": "الحج",
+      "revelationOrder": 103,
+      "revelationPlace": "madinah",
+      "ayahCount": 78,
+      "bismillahPre": true
+    },
+    {
+      "number": 23,
+      "nameTransliteration": "Al-Mu'minūn",
+      "nameSimple": "Al-Mu'minun",
+      "nameArabic": "المؤمنون",
+      "revelationOrder": 74,
+      "revelationPlace": "makkah",
+      "ayahCount": 118,
+      "bismillahPre": true
+    },
+    {
+      "number": 24,
+      "nameTransliteration": "An-Nūr",
+      "nameSimple": "An-Nur",
+      "nameArabic": "النور",
+      "revelationOrder": 102,
+      "revelationPlace": "madinah",
+      "ayahCount": 64,
+      "bismillahPre": true
+    },
+    {
+      "number": 25,
+      "nameTransliteration": "Al-Furqān",
+      "nameSimple": "Al-Furqan",
+      "nameArabic": "الفرقان",
+      "revelationOrder": 42,
+      "revelationPlace": "makkah",
+      "ayahCount": 77,
+      "bismillahPre": true
+    },
+    {
+      "number": 26,
+      "nameTransliteration": "Ash-Shu`arā",
+      "nameSimple": "Ash-Shu'ara",
+      "nameArabic": "الشعراء",
+      "revelationOrder": 47,
+      "revelationPlace": "makkah",
+      "ayahCount": 227,
+      "bismillahPre": true
+    },
+    {
+      "number": 27,
+      "nameTransliteration": "An-Naml",
+      "nameSimple": "An-Naml",
+      "nameArabic": "النمل",
+      "revelationOrder": 48,
+      "revelationPlace": "makkah",
+      "ayahCount": 93,
+      "bismillahPre": true
+    },
+    {
+      "number": 28,
+      "nameTransliteration": "Al-Qaşaş",
+      "nameSimple": "Al-Qasas",
+      "nameArabic": "القصص",
+      "revelationOrder": 49,
+      "revelationPlace": "makkah",
+      "ayahCount": 88,
+      "bismillahPre": true
+    },
+    {
+      "number": 29,
+      "nameTransliteration": "Al-`Ankabūt",
+      "nameSimple": "Al-'Ankabut",
+      "nameArabic": "العنكبوت",
+      "revelationOrder": 85,
+      "revelationPlace": "makkah",
+      "ayahCount": 69,
+      "bismillahPre": true
+    },
+    {
+      "number": 30,
+      "nameTransliteration": "Ar-Rūm",
+      "nameSimple": "Ar-Rum",
+      "nameArabic": "الروم",
+      "revelationOrder": 84,
+      "revelationPlace": "makkah",
+      "ayahCount": 60,
+      "bismillahPre": true
+    },
+    {
+      "number": 31,
+      "nameTransliteration": "Luqmān",
+      "nameSimple": "Luqman",
+      "nameArabic": "لقمان",
+      "revelationOrder": 57,
+      "revelationPlace": "makkah",
+      "ayahCount": 34,
+      "bismillahPre": true
+    },
+    {
+      "number": 32,
+      "nameTransliteration": "As-Sajdah",
+      "nameSimple": "As-Sajdah",
+      "nameArabic": "السجدة",
+      "revelationOrder": 75,
+      "revelationPlace": "makkah",
+      "ayahCount": 30,
+      "bismillahPre": true
+    },
+    {
+      "number": 33,
+      "nameTransliteration": "Al-'Aĥzāb",
+      "nameSimple": "Al-Ahzab",
+      "nameArabic": "الأحزاب",
+      "revelationOrder": 90,
+      "revelationPlace": "madinah",
+      "ayahCount": 73,
+      "bismillahPre": true
+    },
+    {
+      "number": 34,
+      "nameTransliteration": "Saba",
+      "nameSimple": "Saba",
+      "nameArabic": "سبإ",
+      "revelationOrder": 58,
+      "revelationPlace": "makkah",
+      "ayahCount": 54,
+      "bismillahPre": true
+    },
+    {
+      "number": 35,
+      "nameTransliteration": "Fāţir",
+      "nameSimple": "Fatir",
+      "nameArabic": "فاطر",
+      "revelationOrder": 43,
+      "revelationPlace": "makkah",
+      "ayahCount": 45,
+      "bismillahPre": true
+    },
+    {
+      "number": 36,
+      "nameTransliteration": "Yā-Sīn",
+      "nameSimple": "Ya-Sin",
+      "nameArabic": "يس",
+      "revelationOrder": 41,
+      "revelationPlace": "makkah",
+      "ayahCount": 83,
+      "bismillahPre": true
+    },
+    {
+      "number": 37,
+      "nameTransliteration": "Aş-Şāffāt",
+      "nameSimple": "As-Saffat",
+      "nameArabic": "الصافات",
+      "revelationOrder": 56,
+      "revelationPlace": "makkah",
+      "ayahCount": 182,
+      "bismillahPre": true
+    },
+    {
+      "number": 38,
+      "nameTransliteration": "Şād",
+      "nameSimple": "Sad",
+      "nameArabic": "ص",
+      "revelationOrder": 38,
+      "revelationPlace": "makkah",
+      "ayahCount": 88,
+      "bismillahPre": true
+    },
+    {
+      "number": 39,
+      "nameTransliteration": "Az-Zumar",
+      "nameSimple": "Az-Zumar",
+      "nameArabic": "الزمر",
+      "revelationOrder": 59,
+      "revelationPlace": "makkah",
+      "ayahCount": 75,
+      "bismillahPre": true
+    },
+    {
+      "number": 40,
+      "nameTransliteration": "Ghāfir",
+      "nameSimple": "Ghafir",
+      "nameArabic": "غافر",
+      "revelationOrder": 60,
+      "revelationPlace": "makkah",
+      "ayahCount": 85,
+      "bismillahPre": true
+    },
+    {
+      "number": 41,
+      "nameTransliteration": "Fuşşilat",
+      "nameSimple": "Fussilat",
+      "nameArabic": "فصلت",
+      "revelationOrder": 61,
+      "revelationPlace": "makkah",
+      "ayahCount": 54,
+      "bismillahPre": true
+    },
+    {
+      "number": 42,
+      "nameTransliteration": "Ash-Shūraá",
+      "nameSimple": "Ash-Shuraa",
+      "nameArabic": "الشورى",
+      "revelationOrder": 62,
+      "revelationPlace": "makkah",
+      "ayahCount": 53,
+      "bismillahPre": true
+    },
+    {
+      "number": 43,
+      "nameTransliteration": "Az-Zukhruf",
+      "nameSimple": "Az-Zukhruf",
+      "nameArabic": "الزخرف",
+      "revelationOrder": 63,
+      "revelationPlace": "makkah",
+      "ayahCount": 89,
+      "bismillahPre": true
+    },
+    {
+      "number": 44,
+      "nameTransliteration": "Ad-Dukhān",
+      "nameSimple": "Ad-Dukhan",
+      "nameArabic": "الدخان",
+      "revelationOrder": 64,
+      "revelationPlace": "makkah",
+      "ayahCount": 59,
+      "bismillahPre": true
+    },
+    {
+      "number": 45,
+      "nameTransliteration": "Al-Jāthiyah",
+      "nameSimple": "Al-Jathiyah",
+      "nameArabic": "الجاثية",
+      "revelationOrder": 65,
+      "revelationPlace": "makkah",
+      "ayahCount": 37,
+      "bismillahPre": true
+    },
+    {
+      "number": 46,
+      "nameTransliteration": "Al-'Aĥqāf",
+      "nameSimple": "Al-Ahqaf",
+      "nameArabic": "الأحقاف",
+      "revelationOrder": 66,
+      "revelationPlace": "makkah",
+      "ayahCount": 35,
+      "bismillahPre": true
+    },
+    {
+      "number": 47,
+      "nameTransliteration": "Muĥammad",
+      "nameSimple": "Muhammad",
+      "nameArabic": "محمد",
+      "revelationOrder": 95,
+      "revelationPlace": "madinah",
+      "ayahCount": 38,
+      "bismillahPre": true
+    },
+    {
+      "number": 48,
+      "nameTransliteration": "Al-Fatĥ",
+      "nameSimple": "Al-Fath",
+      "nameArabic": "الفتح",
+      "revelationOrder": 111,
+      "revelationPlace": "madinah",
+      "ayahCount": 29,
+      "bismillahPre": true
+    },
+    {
+      "number": 49,
+      "nameTransliteration": "Al-Ĥujurāt",
+      "nameSimple": "Al-Hujurat",
+      "nameArabic": "الحجرات",
+      "revelationOrder": 106,
+      "revelationPlace": "madinah",
+      "ayahCount": 18,
+      "bismillahPre": true
+    },
+    {
+      "number": 50,
+      "nameTransliteration": "Qāf",
+      "nameSimple": "Qaf",
+      "nameArabic": "ق",
+      "revelationOrder": 34,
+      "revelationPlace": "makkah",
+      "ayahCount": 45,
+      "bismillahPre": true
+    },
+    {
+      "number": 51,
+      "nameTransliteration": "Adh-Dhāriyāt",
+      "nameSimple": "Adh-Dhariyat",
+      "nameArabic": "الذاريات",
+      "revelationOrder": 67,
+      "revelationPlace": "makkah",
+      "ayahCount": 60,
+      "bismillahPre": true
+    },
+    {
+      "number": 52,
+      "nameTransliteration": "Aţ-Ţūr",
+      "nameSimple": "At-Tur",
+      "nameArabic": "الطور",
+      "revelationOrder": 76,
+      "revelationPlace": "makkah",
+      "ayahCount": 49,
+      "bismillahPre": true
+    },
+    {
+      "number": 53,
+      "nameTransliteration": "An-Najm",
+      "nameSimple": "An-Najm",
+      "nameArabic": "النجم",
+      "revelationOrder": 23,
+      "revelationPlace": "makkah",
+      "ayahCount": 62,
+      "bismillahPre": true
+    },
+    {
+      "number": 54,
+      "nameTransliteration": "Al-Qamar",
+      "nameSimple": "Al-Qamar",
+      "nameArabic": "القمر",
+      "revelationOrder": 37,
+      "revelationPlace": "makkah",
+      "ayahCount": 55,
+      "bismillahPre": true
+    },
+    {
+      "number": 55,
+      "nameTransliteration": "Ar-Raĥmān",
+      "nameSimple": "Ar-Rahman",
+      "nameArabic": "الرحمن",
+      "revelationOrder": 97,
+      "revelationPlace": "madinah",
+      "ayahCount": 78,
+      "bismillahPre": true
+    },
+    {
+      "number": 56,
+      "nameTransliteration": "Al-Wāqi`ah",
+      "nameSimple": "Al-Waqi'ah",
+      "nameArabic": "الواقعة",
+      "revelationOrder": 46,
+      "revelationPlace": "makkah",
+      "ayahCount": 96,
+      "bismillahPre": true
+    },
+    {
+      "number": 57,
+      "nameTransliteration": "Al-Ĥadīd",
+      "nameSimple": "Al-Hadid",
+      "nameArabic": "الحديد",
+      "revelationOrder": 94,
+      "revelationPlace": "madinah",
+      "ayahCount": 29,
+      "bismillahPre": true
+    },
+    {
+      "number": 58,
+      "nameTransliteration": "Al-Mujādila",
+      "nameSimple": "Al-Mujadila",
+      "nameArabic": "المجادلة",
+      "revelationOrder": 105,
+      "revelationPlace": "madinah",
+      "ayahCount": 22,
+      "bismillahPre": true
+    },
+    {
+      "number": 59,
+      "nameTransliteration": "Al-Ĥashr",
+      "nameSimple": "Al-Hashr",
+      "nameArabic": "الحشر",
+      "revelationOrder": 101,
+      "revelationPlace": "madinah",
+      "ayahCount": 24,
+      "bismillahPre": true
+    },
+    {
+      "number": 60,
+      "nameTransliteration": "Al-Mumtaĥanah",
+      "nameSimple": "Al-Mumtahanah",
+      "nameArabic": "الممتحنة",
+      "revelationOrder": 91,
+      "revelationPlace": "madinah",
+      "ayahCount": 13,
+      "bismillahPre": true
+    },
+    {
+      "number": 61,
+      "nameTransliteration": "Aş-Şaf",
+      "nameSimple": "As-Saf",
+      "nameArabic": "الصف",
+      "revelationOrder": 109,
+      "revelationPlace": "madinah",
+      "ayahCount": 14,
+      "bismillahPre": true
+    },
+    {
+      "number": 62,
+      "nameTransliteration": "Al-Jumu`ah",
+      "nameSimple": "Al-Jumu'ah",
+      "nameArabic": "الجمعة",
+      "revelationOrder": 110,
+      "revelationPlace": "madinah",
+      "ayahCount": 11,
+      "bismillahPre": true
+    },
+    {
+      "number": 63,
+      "nameTransliteration": "Al-Munāfiqūn",
+      "nameSimple": "Al-Munafiqun",
+      "nameArabic": "المنافقون",
+      "revelationOrder": 104,
+      "revelationPlace": "madinah",
+      "ayahCount": 11,
+      "bismillahPre": true
+    },
+    {
+      "number": 64,
+      "nameTransliteration": "At-Taghābun",
+      "nameSimple": "At-Taghabun",
+      "nameArabic": "التغابن",
+      "revelationOrder": 108,
+      "revelationPlace": "madinah",
+      "ayahCount": 18,
+      "bismillahPre": true
+    },
+    {
+      "number": 65,
+      "nameTransliteration": "Aţ-Ţalāq",
+      "nameSimple": "At-Talaq",
+      "nameArabic": "الطلاق",
+      "revelationOrder": 99,
+      "revelationPlace": "madinah",
+      "ayahCount": 12,
+      "bismillahPre": true
+    },
+    {
+      "number": 66,
+      "nameTransliteration": "At-Taĥrīm",
+      "nameSimple": "At-Tahrim",
+      "nameArabic": "التحريم",
+      "revelationOrder": 107,
+      "revelationPlace": "madinah",
+      "ayahCount": 12,
+      "bismillahPre": true
+    },
+    {
+      "number": 67,
+      "nameTransliteration": "Al-Mulk",
+      "nameSimple": "Al-Mulk",
+      "nameArabic": "الملك",
+      "revelationOrder": 77,
+      "revelationPlace": "makkah",
+      "ayahCount": 30,
+      "bismillahPre": true
+    },
+    {
+      "number": 68,
+      "nameTransliteration": "Al-Qalam",
+      "nameSimple": "Al-Qalam",
+      "nameArabic": "القلم",
+      "revelationOrder": 2,
+      "revelationPlace": "makkah",
+      "ayahCount": 52,
+      "bismillahPre": true
+    },
+    {
+      "number": 69,
+      "nameTransliteration": "Al-Ĥāqqah",
+      "nameSimple": "Al-Haqqah",
+      "nameArabic": "الحاقة",
+      "revelationOrder": 78,
+      "revelationPlace": "makkah",
+      "ayahCount": 52,
+      "bismillahPre": true
+    },
+    {
+      "number": 70,
+      "nameTransliteration": "Al-Ma`ārij",
+      "nameSimple": "Al-Ma'arij",
+      "nameArabic": "المعارج",
+      "revelationOrder": 79,
+      "revelationPlace": "makkah",
+      "ayahCount": 44,
+      "bismillahPre": true
+    },
+    {
+      "number": 71,
+      "nameTransliteration": "Nūĥ",
+      "nameSimple": "Nuh",
+      "nameArabic": "نوح",
+      "revelationOrder": 71,
+      "revelationPlace": "makkah",
+      "ayahCount": 28,
+      "bismillahPre": true
+    },
+    {
+      "number": 72,
+      "nameTransliteration": "Al-Jinn",
+      "nameSimple": "Al-Jinn",
+      "nameArabic": "الجن",
+      "revelationOrder": 40,
+      "revelationPlace": "makkah",
+      "ayahCount": 28,
+      "bismillahPre": true
+    },
+    {
+      "number": 73,
+      "nameTransliteration": "Al-Muzzammil",
+      "nameSimple": "Al-Muzzammil",
+      "nameArabic": "المزمل",
+      "revelationOrder": 3,
+      "revelationPlace": "makkah",
+      "ayahCount": 20,
+      "bismillahPre": true
+    },
+    {
+      "number": 74,
+      "nameTransliteration": "Al-Muddaththir",
+      "nameSimple": "Al-Muddaththir",
+      "nameArabic": "المدثر",
+      "revelationOrder": 4,
+      "revelationPlace": "makkah",
+      "ayahCount": 56,
+      "bismillahPre": true
+    },
+    {
+      "number": 75,
+      "nameTransliteration": "Al-Qiyāmah",
+      "nameSimple": "Al-Qiyamah",
+      "nameArabic": "القيامة",
+      "revelationOrder": 31,
+      "revelationPlace": "makkah",
+      "ayahCount": 40,
+      "bismillahPre": true
+    },
+    {
+      "number": 76,
+      "nameTransliteration": "Al-'Insān",
+      "nameSimple": "Al-Insan",
+      "nameArabic": "الانسان",
+      "revelationOrder": 98,
+      "revelationPlace": "madinah",
+      "ayahCount": 31,
+      "bismillahPre": true
+    },
+    {
+      "number": 77,
+      "nameTransliteration": "Al-Mursalāt",
+      "nameSimple": "Al-Mursalat",
+      "nameArabic": "المرسلات",
+      "revelationOrder": 33,
+      "revelationPlace": "makkah",
+      "ayahCount": 50,
+      "bismillahPre": true
+    },
+    {
+      "number": 78,
+      "nameTransliteration": "An-Naba",
+      "nameSimple": "An-Naba",
+      "nameArabic": "النبإ",
+      "revelationOrder": 80,
+      "revelationPlace": "makkah",
+      "ayahCount": 40,
+      "bismillahPre": true
+    },
+    {
+      "number": 79,
+      "nameTransliteration": "An-Nāzi`āt",
+      "nameSimple": "An-Nazi'at",
+      "nameArabic": "النازعات",
+      "revelationOrder": 81,
+      "revelationPlace": "makkah",
+      "ayahCount": 46,
+      "bismillahPre": true
+    },
+    {
+      "number": 80,
+      "nameTransliteration": "`Abasa",
+      "nameSimple": "'Abasa",
+      "nameArabic": "عبس",
+      "revelationOrder": 24,
+      "revelationPlace": "makkah",
+      "ayahCount": 42,
+      "bismillahPre": true
+    },
+    {
+      "number": 81,
+      "nameTransliteration": "At-Takwīr",
+      "nameSimple": "At-Takwir",
+      "nameArabic": "التكوير",
+      "revelationOrder": 7,
+      "revelationPlace": "makkah",
+      "ayahCount": 29,
+      "bismillahPre": true
+    },
+    {
+      "number": 82,
+      "nameTransliteration": "Al-'Infiţār",
+      "nameSimple": "Al-Infitar",
+      "nameArabic": "الإنفطار",
+      "revelationOrder": 82,
+      "revelationPlace": "makkah",
+      "ayahCount": 19,
+      "bismillahPre": true
+    },
+    {
+      "number": 83,
+      "nameTransliteration": "Al-Muţaffifīn",
+      "nameSimple": "Al-Mutaffifin",
+      "nameArabic": "المطففين",
+      "revelationOrder": 86,
+      "revelationPlace": "makkah",
+      "ayahCount": 36,
+      "bismillahPre": true
+    },
+    {
+      "number": 84,
+      "nameTransliteration": "Al-'Inshiqāq",
+      "nameSimple": "Al-Inshiqaq",
+      "nameArabic": "الإنشقاق",
+      "revelationOrder": 83,
+      "revelationPlace": "makkah",
+      "ayahCount": 25,
+      "bismillahPre": true
+    },
+    {
+      "number": 85,
+      "nameTransliteration": "Al-Burūj",
+      "nameSimple": "Al-Buruj",
+      "nameArabic": "البروج",
+      "revelationOrder": 27,
+      "revelationPlace": "makkah",
+      "ayahCount": 22,
+      "bismillahPre": true
+    },
+    {
+      "number": 86,
+      "nameTransliteration": "Aţ-Ţāriq",
+      "nameSimple": "At-Tariq",
+      "nameArabic": "الطارق",
+      "revelationOrder": 36,
+      "revelationPlace": "makkah",
+      "ayahCount": 17,
+      "bismillahPre": true
+    },
+    {
+      "number": 87,
+      "nameTransliteration": "Al-'A`lá",
+      "nameSimple": "Al-A'la",
+      "nameArabic": "الأعلى",
+      "revelationOrder": 8,
+      "revelationPlace": "makkah",
+      "ayahCount": 19,
+      "bismillahPre": true
+    },
+    {
+      "number": 88,
+      "nameTransliteration": "Al-Ghāshiyah",
+      "nameSimple": "Al-Ghashiyah",
+      "nameArabic": "الغاشية",
+      "revelationOrder": 68,
+      "revelationPlace": "makkah",
+      "ayahCount": 26,
+      "bismillahPre": true
+    },
+    {
+      "number": 89,
+      "nameTransliteration": "Al-Fajr",
+      "nameSimple": "Al-Fajr",
+      "nameArabic": "الفجر",
+      "revelationOrder": 10,
+      "revelationPlace": "makkah",
+      "ayahCount": 30,
+      "bismillahPre": true
+    },
+    {
+      "number": 90,
+      "nameTransliteration": "Al-Balad",
+      "nameSimple": "Al-Balad",
+      "nameArabic": "البلد",
+      "revelationOrder": 35,
+      "revelationPlace": "makkah",
+      "ayahCount": 20,
+      "bismillahPre": true
+    },
+    {
+      "number": 91,
+      "nameTransliteration": "Ash-Shams",
+      "nameSimple": "Ash-Shams",
+      "nameArabic": "الشمس",
+      "revelationOrder": 26,
+      "revelationPlace": "makkah",
+      "ayahCount": 15,
+      "bismillahPre": true
+    },
+    {
+      "number": 92,
+      "nameTransliteration": "Al-Layl",
+      "nameSimple": "Al-Layl",
+      "nameArabic": "الليل",
+      "revelationOrder": 9,
+      "revelationPlace": "makkah",
+      "ayahCount": 21,
+      "bismillahPre": true
+    },
+    {
+      "number": 93,
+      "nameTransliteration": "Ađ-Đuĥaá",
+      "nameSimple": "Ad-Duhaa",
+      "nameArabic": "الضحى",
+      "revelationOrder": 11,
+      "revelationPlace": "makkah",
+      "ayahCount": 11,
+      "bismillahPre": true
+    },
+    {
+      "number": 94,
+      "nameTransliteration": "Ash-Sharĥ",
+      "nameSimple": "Ash-Sharh",
+      "nameArabic": "الشرح",
+      "revelationOrder": 12,
+      "revelationPlace": "makkah",
+      "ayahCount": 8,
+      "bismillahPre": true
+    },
+    {
+      "number": 95,
+      "nameTransliteration": "At-Tīn",
+      "nameSimple": "At-Tin",
+      "nameArabic": "التين",
+      "revelationOrder": 28,
+      "revelationPlace": "makkah",
+      "ayahCount": 8,
+      "bismillahPre": true
+    },
+    {
+      "number": 96,
+      "nameTransliteration": "Al-`Alaq",
+      "nameSimple": "Al-'Alaq",
+      "nameArabic": "العلق",
+      "revelationOrder": 1,
+      "revelationPlace": "makkah",
+      "ayahCount": 19,
+      "bismillahPre": true
+    },
+    {
+      "number": 97,
+      "nameTransliteration": "Al-Qadr",
+      "nameSimple": "Al-Qadr",
+      "nameArabic": "القدر",
+      "revelationOrder": 25,
+      "revelationPlace": "makkah",
+      "ayahCount": 5,
+      "bismillahPre": true
+    },
+    {
+      "number": 98,
+      "nameTransliteration": "Al-Bayyinah",
+      "nameSimple": "Al-Bayyinah",
+      "nameArabic": "البينة",
+      "revelationOrder": 100,
+      "revelationPlace": "madinah",
+      "ayahCount": 8,
+      "bismillahPre": true
+    },
+    {
+      "number": 99,
+      "nameTransliteration": "Az-Zalzalah",
+      "nameSimple": "Az-Zalzalah",
+      "nameArabic": "الزلزلة",
+      "revelationOrder": 93,
+      "revelationPlace": "madinah",
+      "ayahCount": 8,
+      "bismillahPre": true
+    },
+    {
+      "number": 100,
+      "nameTransliteration": "Al-`Ādiyāt",
+      "nameSimple": "Al-'Adiyat",
+      "nameArabic": "العاديات",
+      "revelationOrder": 14,
+      "revelationPlace": "makkah",
+      "ayahCount": 11,
+      "bismillahPre": true
+    },
+    {
+      "number": 101,
+      "nameTransliteration": "Al-Qāri`ah",
+      "nameSimple": "Al-Qari'ah",
+      "nameArabic": "القارعة",
+      "revelationOrder": 30,
+      "revelationPlace": "makkah",
+      "ayahCount": 11,
+      "bismillahPre": true
+    },
+    {
+      "number": 102,
+      "nameTransliteration": "At-Takāthur",
+      "nameSimple": "At-Takathur",
+      "nameArabic": "التكاثر",
+      "revelationOrder": 16,
+      "revelationPlace": "makkah",
+      "ayahCount": 8,
+      "bismillahPre": true
+    },
+    {
+      "number": 103,
+      "nameTransliteration": "Al-`Aşr",
+      "nameSimple": "Al-'Asr",
+      "nameArabic": "العصر",
+      "revelationOrder": 13,
+      "revelationPlace": "makkah",
+      "ayahCount": 3,
+      "bismillahPre": true
+    },
+    {
+      "number": 104,
+      "nameTransliteration": "Al-Humazah",
+      "nameSimple": "Al-Humazah",
+      "nameArabic": "الهمزة",
+      "revelationOrder": 32,
+      "revelationPlace": "makkah",
+      "ayahCount": 9,
+      "bismillahPre": true
+    },
+    {
+      "number": 105,
+      "nameTransliteration": "Al-Fīl",
+      "nameSimple": "Al-Fil",
+      "nameArabic": "الفيل",
+      "revelationOrder": 19,
+      "revelationPlace": "makkah",
+      "ayahCount": 5,
+      "bismillahPre": true
+    },
+    {
+      "number": 106,
+      "nameTransliteration": "Quraysh",
+      "nameSimple": "Quraysh",
+      "nameArabic": "قريش",
+      "revelationOrder": 29,
+      "revelationPlace": "makkah",
+      "ayahCount": 4,
+      "bismillahPre": true
+    },
+    {
+      "number": 107,
+      "nameTransliteration": "Al-Mā`ūn",
+      "nameSimple": "Al-Ma'un",
+      "nameArabic": "الماعون",
+      "revelationOrder": 17,
+      "revelationPlace": "makkah",
+      "ayahCount": 7,
+      "bismillahPre": true
+    },
+    {
+      "number": 108,
+      "nameTransliteration": "Al-Kawthar",
+      "nameSimple": "Al-Kawthar",
+      "nameArabic": "الكوثر",
+      "revelationOrder": 15,
+      "revelationPlace": "makkah",
+      "ayahCount": 3,
+      "bismillahPre": true
+    },
+    {
+      "number": 109,
+      "nameTransliteration": "Al-Kāfirūn",
+      "nameSimple": "Al-Kafirun",
+      "nameArabic": "الكافرون",
+      "revelationOrder": 18,
+      "revelationPlace": "makkah",
+      "ayahCount": 6,
+      "bismillahPre": true
+    },
+    {
+      "number": 110,
+      "nameTransliteration": "An-Naşr",
+      "nameSimple": "An-Nasr",
+      "nameArabic": "النصر",
+      "revelationOrder": 114,
+      "revelationPlace": "madinah",
+      "ayahCount": 3,
+      "bismillahPre": true
+    },
+    {
+      "number": 111,
+      "nameTransliteration": "Al-Masad",
+      "nameSimple": "Al-Masad",
+      "nameArabic": "المسد",
+      "revelationOrder": 6,
+      "revelationPlace": "makkah",
+      "ayahCount": 5,
+      "bismillahPre": true
+    },
+    {
+      "number": 112,
+      "nameTransliteration": "Al-'Ikhlāş",
+      "nameSimple": "Al-Ikhlas",
+      "nameArabic": "الإخلاص",
+      "revelationOrder": 22,
+      "revelationPlace": "makkah",
+      "ayahCount": 4,
+      "bismillahPre": true
+    },
+    {
+      "number": 113,
+      "nameTransliteration": "Al-Falaq",
+      "nameSimple": "Al-Falaq",
+      "nameArabic": "الفلق",
+      "revelationOrder": 20,
+      "revelationPlace": "makkah",
+      "ayahCount": 5,
+      "bismillahPre": true
+    },
+    {
+      "number": 114,
+      "nameTransliteration": "An-Nās",
+      "nameSimple": "An-Nas",
+      "nameArabic": "الناس",
+      "revelationOrder": 21,
+      "revelationPlace": "makkah",
+      "ayahCount": 6,
+      "bismillahPre": true
+    }
+  ]
+}

@@ -76,6 +76,7 @@ web_modules/
 
 # Next.js build output
 .next
+.next-playwright
 out
 
 # Nuxt.js build / generate output
@@ -155,3 +156,14 @@ vite.config.ts.timestamp-*
 .nx/cache
 .nx/workspace-data
 .nx/migrate-runs
+
+# Cloudflare Workers and OpenNext
+.open-next/
+.wrangler/
+.dev.vars
+playwright-report/
+test-results/
+.playwright-browsers/
+
+# Supabase local state
+supabase/.temp/
