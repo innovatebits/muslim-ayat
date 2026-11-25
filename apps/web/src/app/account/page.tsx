@@ -5,6 +5,7 @@ import { updateProfileAction } from "@/app/actions/personal-data";
 import { getSurahIndex } from "@muslim-ayat/quran-data/reader";
 import { getPersonalData } from "@/lib/personal-data";
 import { getAccountIdentityLabel } from "@/lib/account-identity";
+import { featureFlags } from "@/lib/features";
 
 export const dynamic = "force-dynamic";
 
@@ -69,7 +70,7 @@ export default async function AccountPage() {
               </form>
             </div>
 
-            <form action={updateProfileAction} className="rounded-2xl border border-[var(--line)] bg-white/80 p-5 sm:p-7">
+            {featureFlags.accountProfile ? (\n            <form action={updateProfileAction} className="rounded-2xl border border-[var(--line)] bg-white/80 p-5 sm:p-7">
               <h2 className="text-lg font-semibold text-[var(--green)]">Profile preferences</h2>
               <label className="mt-4 block max-w-sm text-sm font-medium text-[var(--ink)]" htmlFor="preferred-language">
                 Preferred language
@@ -114,7 +115,7 @@ export default async function AccountPage() {
               </article>
             </section>
 
-            {personalData.notes.length ? (
+            {featureFlags.notes && personalData.notes.length ? (
               <section className="rounded-2xl border border-[var(--line)] bg-white/80 p-5">
                 <h2 className="text-lg font-semibold text-[var(--green)]">Recent notes</h2>
                 <ul className="mt-4 space-y-3">
