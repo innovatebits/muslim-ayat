@@ -58,7 +58,7 @@ Supabase Auth supports configurable Google, Microsoft, Facebook, email/password 
 
 Optional capabilities are controlled by `NEXT_PUBLIC_FEATURE_*` flags in the deployment environment. See [`.env.example`](.env.example) for the complete list and defaults. Set a flag to `false` to disable that capability, then rebuild/redeploy. The core Quran reader and Arabic text remain available.
 
-Flags control product availability, not authorization. Server actions and API routes must enforce disabled features, and Supabase RLS continues to protect user data.
+For example, set `NEXT_PUBLIC_FEATURE_BOOKMARKS=false` to hide bookmarks or `NEXT_PUBLIC_FEATURE_AUTH_MICROSOFT=false` to remove Microsoft sign-in. Flags control product availability, not authorization. Server actions and API routes must enforce disabled features, and Supabase RLS continues to protect user data.
 
 ## Content maintenance
 
