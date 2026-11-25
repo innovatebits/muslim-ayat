@@ -6,6 +6,7 @@ describe("feature flags", () => {
     expect(featureFlags.translations).toBe(true);
     expect(featureFlags.bookmarks).toBe(true);
     expect(featureFlags.authMicrosoft).toBe(true);
+    expect(featureFlags.authPasswordReset).toBe(true);
   });
 
   it("exposes a typed lookup for application gates", () => {
