@@ -70,7 +70,8 @@ export default async function AccountPage() {
               </form>
             </div>
 
-            {featureFlags.accountProfile ? (\n            <form action={updateProfileAction} className="rounded-2xl border border-[var(--line)] bg-white/80 p-5 sm:p-7">
+            {featureFlags.accountProfile ? (
+            <form action={updateProfileAction} className="rounded-2xl border border-[var(--line)] bg-white/80 p-5 sm:p-7">
               <h2 className="text-lg font-semibold text-[var(--green)]">Profile preferences</h2>
               <label className="mt-4 block max-w-sm text-sm font-medium text-[var(--ink)]" htmlFor="preferred-language">
                 Preferred language
@@ -89,8 +90,10 @@ export default async function AccountPage() {
                 Save profile
               </button>
             </form>
+            ) : null}
 
             <section className="grid gap-6 md:grid-cols-2">
+              {featureFlags.readingProgress ? (
               <article className="rounded-2xl border border-[var(--line)] bg-white/80 p-5">
                 <h2 className="text-lg font-semibold text-[var(--green)]">Reading progress</h2>
                 {personalData.progress && progressSurah ? (
@@ -104,6 +107,8 @@ export default async function AccountPage() {
                   <p className="mt-3 text-sm text-[var(--muted)]">No reading position saved yet.</p>
                 )}
               </article>
+              ) : null}
+              {featureFlags.bookmarks || featureFlags.notes ? (
               <article className="rounded-2xl border border-[var(--line)] bg-white/80 p-5">
                 <h2 className="text-lg font-semibold text-[var(--green)]">Personal items</h2>
                 <p className="mt-3 text-sm text-[var(--muted)]">
@@ -113,6 +118,7 @@ export default async function AccountPage() {
                   Manage bookmarks and notes
                 </Link>
               </article>
+              ) : null}
             </section>
 
             {featureFlags.notes && personalData.notes.length ? (
