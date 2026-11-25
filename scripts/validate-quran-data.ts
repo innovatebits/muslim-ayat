@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { sourceChecksumMatches, validateQuranCorpus } from "@muslim-ayat/quran-data";
+import { getJuzIndex } from "@muslim-ayat/quran-data/juz";
 
 const [corpusArgument, sourceArgument] = process.argv.slice(2);
 const corpusPath = resolve(corpusArgument ?? "packages/quran-data/src/data/quran.json");
@@ -22,6 +23,7 @@ try {
   }
 
   if (result.success) {
+    console.log(`Validated ${getJuzIndex().length} contiguous Juz ranges.`);
     const sourceBytes = await readFile(sourcePath);
     const actualChecksum = createHash("sha256").update(sourceBytes).digest("hex");
     if (!sourceChecksumMatches(result.data.source.sha256, actualChecksum)) {

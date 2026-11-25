@@ -21,6 +21,7 @@ export default function QuranPage() {
         </Link>
         <nav aria-label="Reader navigation" className="flex flex-wrap items-center gap-5 text-sm">
           {featureFlags.search ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/search">Search</Link> : null}
+          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/juz">Browse by Juz</Link>
           {featureFlags.readerPreferences ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/settings">Reading settings</Link> : null}
           {featureFlags.bookmarks || featureFlags.notes ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">Saved items</Link> : null}
           {featureFlags.accountProfile || featureFlags.bookmarks || featureFlags.notes || featureFlags.readingProgress ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/account">Account</Link> : null}
