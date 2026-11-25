@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { QuranStudyAyahSchema, type QuranStudyAyah } from "@muslim-ayat/quran-data";
+import { featureFlags } from "@/lib/features";
 
 type StudyAidProps = {
   surahNumber: number;
@@ -15,6 +16,7 @@ export function StudyAid({ surahNumber, ayahNumber }: StudyAidProps) {
   const [studyAyah, setStudyAyah] = useState<QuranStudyAyah | null>(null);
   const [status, setStatus] = useState<LoadStatus>("idle");
   const panelId = `study-${surahNumber}-${ayahNumber}`;
+  if (!featureFlags.tafsir && !featureFlags.wordByWord) return null;
 
   useEffect(() => {
     if (!isOpen || studyAyah) return;
@@ -56,7 +58,7 @@ export function StudyAid({ surahNumber, ayahNumber }: StudyAidProps) {
         }}
         type="button"
       >
-        Tafsir and word-by-word study {isOpen ? "−" : "+"}
+        {featureFlags.tafsir && featureFlags.wordByWord ? "Tafsir and word-by-word study" : featureFlags.tafsir ? "Tafsir" : "Word-by-word study"} {isOpen ? "−" : "+"}
       </button>
       {isOpen ? (
         <div className="mt-4 space-y-5" id={panelId}>
@@ -68,6 +70,7 @@ export function StudyAid({ surahNumber, ayahNumber }: StudyAidProps) {
             </p>
           ) : studyAyah ? (
             <>
+              {featureFlags.tafsir ? (
               <section aria-labelledby={`${panelId}-tafsir-title`}>
                 <h3 className="font-semibold text-[var(--green)]" id={`${panelId}-tafsir-title`}>
                   Tafsir · Abridged Explanation of the Quran
@@ -80,6 +83,8 @@ export function StudyAid({ surahNumber, ayahNumber }: StudyAidProps) {
                 </p>
                 <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-[var(--ink)]">{studyAyah.tafsir}</p>
               </section>
+              ) : null}
+              {featureFlags.wordByWord ? (
               <section aria-labelledby={`${panelId}-words-title`}>
                 <h3 className="font-semibold text-[var(--green)]" id={`${panelId}-words-title`}>
                   English word-by-word glosses
@@ -99,6 +104,7 @@ export function StudyAid({ surahNumber, ayahNumber }: StudyAidProps) {
                   ))}
                 </ol>
               </section>
+              ) : null}
             </>
           ) : null}
         </div>
