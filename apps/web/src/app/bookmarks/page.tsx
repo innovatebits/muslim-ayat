@@ -3,6 +3,8 @@ import Link from "next/link";
 import { deleteBookmarkAction, deleteNoteAction } from "@/app/actions/personal-data";
 import { getSurahIndex } from "@muslim-ayat/quran-data/reader";
 import { getPersonalData } from "@/lib/personal-data";
+import { featureFlags } from "@/lib/features";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +13,7 @@ export const metadata: Metadata = {
   description: "Review your private Quran bookmarks and notes.",
 };
 
-export default async function BookmarksPage() {
+export default async function BookmarksPage() {\n  if (!featureFlags.bookmarks && !featureFlags.notes) notFound();
   const personalData = await getPersonalData();
   const surahs = getSurahIndex();
 
