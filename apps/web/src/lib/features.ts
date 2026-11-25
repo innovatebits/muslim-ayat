@@ -16,6 +16,7 @@ export const featureFlags = {
   readerPreferences: enabled(process.env.NEXT_PUBLIC_FEATURE_READER_PREFERENCES, true),
   accountProfile: enabled(process.env.NEXT_PUBLIC_FEATURE_ACCOUNT_PROFILE, true),
   authEmailPassword: enabled(process.env.NEXT_PUBLIC_FEATURE_AUTH_EMAIL_PASSWORD, true),
+  authPasswordReset: enabled(process.env.NEXT_PUBLIC_FEATURE_AUTH_PASSWORD_RESET, true),
   authEmailOtp: enabled(process.env.NEXT_PUBLIC_FEATURE_AUTH_EMAIL_OTP, true),
   authMagicLink: enabled(process.env.NEXT_PUBLIC_FEATURE_AUTH_MAGIC_LINK, true),
   authGoogle: enabled(process.env.NEXT_PUBLIC_FEATURE_AUTH_GOOGLE, true),
