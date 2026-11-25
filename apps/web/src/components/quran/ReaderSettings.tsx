@@ -155,7 +155,7 @@ export function ReaderSettings() {
               Want to personalize your experience?
             </h2>
             <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              Sign in to save bookmarks, notes, reading progress and preferences across devices.
+              Sign in to save the personal features enabled on this deployment across devices.
             </p>
             <div className="mt-3 flex flex-wrap items-center gap-3">
               <Link className="rounded-full bg-[var(--green)] px-4 py-2 text-sm font-medium text-white" href="/sign-in">
