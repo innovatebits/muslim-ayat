@@ -124,7 +124,7 @@ Account switching must never expose one user's local records to another. Guest d
 
 Optional capabilities are controlled centrally by `apps/web/src/lib/features.ts`. Public flags use the `NEXT_PUBLIC_FEATURE_*` environment variables so server-rendered and client-rendered surfaces agree. A missing flag uses its documented default; the exact string `false` disables a flag.
 
-Flags cover content capabilities (translation, transliteration, tafsir, word-by-word, search, audio and offline support), personal capabilities (bookmarks, notes, reading progress, reader preferences and account profile) and each authentication method/provider.
+Flags cover content capabilities (translation, transliteration, tafsir, word-by-word, search, audio and offline support), reader presentation (Mushaf layout and Surah headers), personal capabilities (bookmarks, notes, reading progress, reader preferences and account profile) and each authentication method/provider.
 
 Feature flags are deployment configuration, not per-user preferences and not a security system. Every disabled capability must be hidden in navigation/UI and rejected or omitted at the corresponding server route/action. Database RLS remains mandatory regardless of flags. The core Quran reader and Arabic Quran text are deliberately not switchable off because they are the product's primary access guarantee.
 
