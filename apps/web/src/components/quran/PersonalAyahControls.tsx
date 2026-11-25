@@ -14,6 +14,7 @@ import {
   type OfflineNoteRecord,
 } from "@/lib/offline/repository";
 import { synchronizeOfflineData } from "@/lib/offline/sync";
+import { featureFlags } from "@/lib/features";
 
 type OfflineStatus = "loading" | "local-only" | "pending" | "syncing" | "synced" | "error";
 
@@ -223,7 +224,7 @@ export function PersonalAyahControls({
         >
           Notes ({ayahNotes.length})
         </button>
-        {isAuthenticated && notesOpen ? (
+        {featureFlags.notes && isAuthenticated && notesOpen ? (
           <div className="mt-3 w-full min-w-64 space-y-3">
             {ayahNotes.map((note) => (
               <div key={note.clientId} className="rounded-lg bg-[#f7f6ef] p-3">
@@ -276,7 +277,7 @@ export function PersonalAyahControls({
             Want to personalize your experience?
           </h2>
           <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-            Sign in to save bookmarks, notes, reading progress and preferences across devices.
+            Sign in to save the personal features enabled on this deployment across devices.
           </p>
           <div className="mt-3 flex flex-wrap items-center gap-3">
             <Link className="rounded-full bg-[var(--green)] px-4 py-2 text-sm font-medium text-white" href="/sign-in">
