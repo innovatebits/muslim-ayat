@@ -128,7 +128,7 @@ Flags cover content capabilities (translation, transliteration, tafsir, word-by-
 
 Feature flags are deployment configuration, not per-user preferences and not a security system. Every disabled capability must be hidden in navigation/UI and rejected or omitted at the corresponding server route/action. Database RLS remains mandatory regardless of flags. The core Quran reader and Arabic Quran text are deliberately not switchable off because they are the product's primary access guarantee.
 
-To change flags, update the relevant environment variables in local `.env.local` or the deployment environment and rebuild/redeploy the application. Do not expose an unauthenticated public admin endpoint for changing global flags. A future remotely managed feature-flag service would require authenticated administrative authorization, audit history, safe defaults and server-side enforcement.
+To change flags, update the relevant environment variables in local `.env.local` or GitHub Actions repository variables for the Cloudflare deployment, then rebuild/redeploy the application. The deployment workflow passes the public flag variables into the OpenNext build. Do not expose an unauthenticated public admin endpoint for changing global flags. A future remotely managed feature-flag service would require authenticated administrative authorization, audit history, safe defaults and server-side enforcement.
 
 ## Security and privacy
 
