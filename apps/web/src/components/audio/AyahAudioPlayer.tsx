@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { featureFlags } from "@/lib/features";
 import {
   getAyahAudioUrl,
-  isAudioFeatureEnabled,
   QURAN_AUDIO_RECITERS,
 } from "@muslim-ayat/quran-data/audio";
 
@@ -29,7 +28,7 @@ export function AyahAudioPlayer({
   const [isOnline, setIsOnline] = useState(true);
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const audioEnabled = featureFlags.audio && isAudioFeatureEnabled(process.env.NEXT_PUBLIC_ENABLE_AUDIO);
+  const audioEnabled = featureFlags.audio;
   const reciter = QURAN_AUDIO_RECITERS.find((item) => item.identifier === reciterId);
   const audioUrl = getAyahAudioUrl(surahNumber, ayahNumber, reciterId);
   const unavailable = audioUrl !== undefined && failedUrl === audioUrl;
