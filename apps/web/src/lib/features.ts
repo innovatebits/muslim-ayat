@@ -4,6 +4,8 @@ function enabled(value: string | undefined, defaultValue: boolean) {
 
 export const featureFlags = {
   translations: enabled(process.env.NEXT_PUBLIC_FEATURE_TRANSLATIONS, true),
+  mushafLayout: enabled(process.env.NEXT_PUBLIC_FEATURE_MUSHAF_LAYOUT, true),
+  surahHeaders: enabled(process.env.NEXT_PUBLIC_FEATURE_SURAH_HEADERS, true),
   transliteration: enabled(process.env.NEXT_PUBLIC_FEATURE_TRANSLITERATION, true),
   tafsir: enabled(process.env.NEXT_PUBLIC_FEATURE_TAFSIR, true),
   wordByWord: enabled(process.env.NEXT_PUBLIC_FEATURE_WORD_BY_WORD, true),
