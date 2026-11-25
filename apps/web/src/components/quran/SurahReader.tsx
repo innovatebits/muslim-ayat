@@ -32,7 +32,7 @@ export function SurahReader({ surah, previousSurah, nextSurah }: SurahReaderProp
   }
 
   useEffect(() => {
-    void cachePublicSurah(surah).catch(() => undefined);
+    if (featureFlags.offline) void cachePublicSurah(surah).catch(() => undefined);
     const frame = window.requestAnimationFrame(() => {
       const ayahNumber = Number(window.location.hash.match(/^#ayah-(\d+)$/u)?.[1]);
       setSelectedAyah(
@@ -88,12 +88,9 @@ export function SurahReader({ surah, previousSurah, nextSurah }: SurahReaderProp
               </option>
             ))}
           </select>
-          <Link
-            className="rounded-full border border-[var(--line)] bg-white px-4 py-2.5 text-sm font-medium text-[var(--green)]"
-            href="/settings"
-          >
-            Reading settings
-          </Link>
+          {featureFlags.readerPreferences ? (
+            <Link className="rounded-full border border-[var(--line)] bg-white px-4 py-2.5 text-sm font-medium text-[var(--green)]" href="/settings">Reading settings</Link>
+          ) : null}
         </div>
       </div>
 
