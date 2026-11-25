@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ContentSources } from "@/components/quran/ContentSources";
 import { FutureReleaseNote } from "@/components/quran/FutureReleaseNote";
 import { getSurahIndex } from "@muslim-ayat/quran-data/reader";
+import { featureFlags } from "@/lib/features";
 
 export const metadata: Metadata = {
   title: "Quran reader",
