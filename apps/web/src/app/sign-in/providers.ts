@@ -1,4 +1,4 @@
-import { isFeatureEnabled } from "@/lib/features";
+import { isFeatureEnabled } from "../../lib/features";
 
 export const socialAuthProviders = [
   { id: "google", name: "Google", feature: "authGoogle" },
