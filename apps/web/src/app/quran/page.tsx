@@ -35,8 +35,7 @@ export default function QuranPage() {
           The Quran
         </h1>
         <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--muted)]">
-          Browse QUL Uthmani text alongside the Saheeh International translation and English
-          transliteration. Source and rights information is shown with each edition.
+          Browse the Quran in its original Arabic script{featureFlags.translations ? ", with translation" : ""}{featureFlags.transliteration ? " and transliteration" : ""}. Source and rights information is shown with each edition.
         </p>
         {featureFlags.search ? (
         <form action="/search" className="mt-7 flex max-w-xl gap-3" method="get" role="search">
@@ -73,9 +72,7 @@ export default function QuranPage() {
               Choose a surah
             </h2>
           </div>
-          <Link className="text-sm font-medium text-[var(--green)] hover:underline" href="/settings">
-            Reading preferences
-          </Link>
+          {featureFlags.readerPreferences ? <Link className="text-sm font-medium text-[var(--green)] hover:underline" href="/settings">Reading preferences</Link> : null}
         </div>
         <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {surahs.map((surah) => (
