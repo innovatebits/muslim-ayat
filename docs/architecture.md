@@ -90,13 +90,13 @@ The reader supports Arabic text, selected translation, transliteration, recitati
 
 Supabase Auth is the identity provider. The application supports these methods when enabled:
 - OAuth: Google, Microsoft (Supabase provider ID `azure`) and Facebook.
-- Email/password: sign-up and password sign-in.
+- Email/password: sign-up, password sign-in and password recovery.
 - Email OTP: request a one-time email code and verify it.
 - Magic link: request a sign-in link delivered by email.
 
 Supabase owns credential storage, password hashing, email delivery and token verification. The application must never store passwords or OTPs. Provider secrets and SMTP configuration belong in Supabase/provider settings, not in browser variables or source control.
 
-The OAuth and email confirmation callback is `/auth/callback`. Redirect URLs must be allowlisted in Supabase Auth. Email OTP templates must expose the token expected by the OTP form; magic-link templates must preserve the confirmation URL. Configure and test these flows in the Supabase project before enabling them in production.
+The OAuth and email confirmation callback is `/auth/callback`. Redirect URLs must be allowlisted in Supabase Auth. Configure the email template to expose the one-time token for OTP and the confirmation URL for magic-link delivery (or use separate templates if the project configuration supports them). Password recovery uses the recovery callback and a dedicated password-update screen. Configure and test these flows in the Supabase project before enabling them in production.
 
 Account identities are not automatically merged based only on matching email addresses. Users should continue signing in with the same provider/identity unless a deliberate, verified account-linking flow is implemented.
 
