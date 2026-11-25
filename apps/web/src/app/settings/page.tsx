@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ContentSources } from "@/components/quran/ContentSources";
 import { ReaderSettings } from "@/components/quran/ReaderSettings";
+import { featureFlags } from "@/lib/features";
 
 export const metadata: Metadata = {
   title: "Reading settings",
@@ -24,7 +25,7 @@ export default function SettingsPage() {
           </Link>
         </nav>
       </header>
-      <ReaderSettings />
+      {featureFlags.readerPreferences ? <ReaderSettings /> : null}
       <div className="mt-10">
         <ContentSources />
       </div>
