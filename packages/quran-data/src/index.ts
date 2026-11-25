@@ -12,20 +12,164 @@ export const SURAH_AYAH_COUNTS = [
   5, 4, 7, 3, 6, 3, 5, 4, 5, 6,
 ] as const;
 
+export const QuranRightsReviewSchema = z
+  .object({
+    reviewStatus: z.enum(["unreviewed", "reviewed"]),
+    rightsHolder: z.string().min(1).nullable(),
+    evidence: z
+      .array(
+        z
+          .object({
+            kind: z.enum([
+              "license",
+              "terms",
+              "rights-holder",
+              "attribution",
+              "scholarly-review",
+              "other",
+            ]),
+            label: z.string().min(1),
+            url: z.string().url().optional(),
+            reference: z.string().min(1).optional(),
+          })
+          .strict()
+          .refine((evidence) => evidence.url !== undefined || evidence.reference !== undefined, {
+            message: "Rights evidence must include a URL or reference",
+          }),
+      ),
+    attribution: z
+      .object({
+        status: z.enum(["unknown", "required", "not-required"]),
+        text: z.string().min(1).nullable(),
+      })
+      .strict()
+      .superRefine((attribution, context) => {
+        if (attribution.status === "required" && attribution.text === null) {
+          context.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Required attribution must include its text",
+            path: ["text"],
+          });
+        }
+      }),
+    reviewerRole: z.string().min(1).nullable(),
+    reviewedAt: z.string().datetime().nullable(),
+    permissions: z
+      .object({
+        publicDisplay: z.enum(["unknown", "permitted", "not-permitted"]),
+        redistribution: z.enum(["unknown", "permitted", "not-permitted"]),
+        offlineCaching: z.enum(["unknown", "permitted", "not-permitted"]),
+        commercialUse: z.enum(["unknown", "permitted", "not-permitted"]),
+      })
+      .strict(),
+  })
+  .strict()
+  .superRefine((review, context) => {
+    const hasReviewer = review.reviewerRole !== null;
+    const hasReviewDate = review.reviewedAt !== null;
+    if (hasReviewer !== hasReviewDate) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Reviewer role and review date must be recorded together",
+        path: [hasReviewer ? "reviewedAt" : "reviewerRole"],
+      });
+    }
+    if (
+      review.reviewStatus === "reviewed" &&
+      (!hasReviewer || review.evidence.length === 0)
+    ) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "A completed rights review requires a reviewer and evidence",
+        path: ["evidence"],
+      });
+    }
+    if (review.reviewStatus === "unreviewed" && hasReviewer) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "An unreviewed rights record cannot include reviewer details",
+        path: ["reviewStatus"],
+      });
+    }
+    if (review.reviewStatus === "unreviewed" && review.attribution.status !== "unknown") {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "An unreviewed rights record cannot make an attribution decision",
+        path: ["attribution", "status"],
+      });
+    }
+    if (review.rightsHolder !== null && review.evidence.length === 0) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "A recorded rights holder requires evidence",
+        path: ["rightsHolder"],
+      });
+    }
+    if (
+      review.reviewStatus === "unreviewed" &&
+      Object.values(review.permissions).some((permission) => permission !== "unknown")
+    ) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "An unreviewed rights record cannot make use-permission decisions",
+        path: ["permissions"],
+      });
+    }
+  });
+
+export type QuranRightsReview = z.infer<typeof QuranRightsReviewSchema>;
+
+export const UNKNOWN_QURAN_RIGHTS_REVIEW: QuranRightsReview = QuranRightsReviewSchema.parse({
+  reviewStatus: "unreviewed",
+  rightsHolder: null,
+  evidence: [],
+  attribution: { status: "unknown", text: null },
+  reviewerRole: null,
+  reviewedAt: null,
+  permissions: {
+    publicDisplay: "unknown",
+    redistribution: "unknown",
+    offlineCaching: "unknown",
+    commercialUse: "unknown",
+  },
+});
+
 export const QuranSourceSchema = z
   .object({
     source: z.string().min(1),
     edition: z.string().min(1),
     attributionNote: z.string().min(1).optional(),
     license: z.string().min(1).nullable(),
-    rightsStatus: z.enum(["unknown", "verified"]),
     url: z.string().url(),
     sha256: z.string().regex(/^[a-f\d]{64}$/i),
     verifiedAt: z.string().datetime(),
+    rightsReview: QuranRightsReviewSchema,
   })
   .strict();
 
 export type QuranSource = z.infer<typeof QuranSourceSchema>;
+
+export function preserveQuranSourceRights(
+  source: QuranSource,
+  previous?: QuranSource,
+): QuranSource {
+  if (
+    !previous ||
+    previous.source !== source.source ||
+    previous.edition !== source.edition
+  ) {
+    return source;
+  }
+
+  return {
+    ...source,
+    ...(previous.attributionNote !== undefined
+      ? { attributionNote: previous.attributionNote }
+      : {}),
+    license: previous.license,
+    rightsReview: previous.rightsReview,
+  };
+}
 
 const AyahSchema = z
   .object({

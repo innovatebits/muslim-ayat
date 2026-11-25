@@ -68,15 +68,26 @@ test("reader lists surahs and guides users to future resources", async ({ page }
   await expect(page.locator('a[href="/surah/1"]')).toBeVisible();
   await expect(page.getByRole("heading", { name: "Study resources and future additions" })).toBeVisible();
   await page.getByText("Sources and rights information", { exact: true }).click();
-  const sourceRecords = page.locator("details ul li");
-  await expect(sourceRecords).toHaveCount(7);
-  await expect(sourceRecords.first()).toContainText("Rights status: unknown");
+  const sourceRecords = page.getByRole("link", { name: "View source record" }).locator("xpath=..");
+  await expect(sourceRecords).toHaveCount(13);
+  await expect(sourceRecords.first()).toContainText("QUL Uthmani Simple");
+  await expect(sourceRecords.first()).toContainText("License metadata: not recorded");
+  await sourceRecords
+    .first()
+    .getByText("Rights review for QUL Uthmani Simple: Unreviewed; permissions unresolved")
+    .click();
+  await expect(sourceRecords.first()).toContainText("Public display: Unknown");
+  await expect(sourceRecords.first()).toContainText("No rights evidence recorded.");
+  await expect(sourceRecords.first()).toContainText("Technical source integrity");
+  await expect(sourceRecords.first()).toContainText("not rights or permissions");
   await expect(sourceRecords.nth(3)).toContainText("resource 70");
   await expect(sourceRecords.nth(4)).toContainText("resource 592");
   await expect(sourceRecords.nth(4)).toContainText("Naveed Ahmad");
   await expect(sourceRecords.nth(4)).toContainText("rights remain unknown");
   await expect(sourceRecords.nth(5)).toContainText("resource ID and original rights holder not independently verified");
   await expect(sourceRecords.nth(6)).toContainText("resource 92");
+  await expect(sourceRecords.nth(7)).toContainText("AlQuran Cloud CDN provider terms");
+  await expect(sourceRecords.nth(8)).toContainText("recording and performance");
 });
 
 test("surah reader displays Arabic, translation, and transliteration", async ({ page }) => {
@@ -174,7 +185,15 @@ test("loads attributed tafsir and leaves missing word glosses blank", async ({ p
   await expect(studyPanel.getByRole("heading", { name: "Tafsir · Abridged Explanation of the Quran" })).toBeVisible();
   await expect(studyPanel.getByRole("heading", { name: "English word-by-word glosses" })).toBeVisible();
   await expect(studyPanel.getByText("No gloss in source").first()).toBeVisible();
-  await expect(studyPanel.getByText(/Rights status: unknown/iu).first()).toBeVisible();
+  await studyPanel
+    .getByText("Rights review for Abridged Explanation of the Quran tafsir: Unreviewed; permissions unresolved")
+    .click();
+  await expect(studyPanel.getByText("Public display: Unknown").first()).toBeVisible();
+  await expect(studyPanel.getByText("No rights evidence recorded.").first()).toBeVisible();
+  await expect(studyPanel.getByRole("link", { name: "Source record" }).first()).toHaveAttribute(
+    "href",
+    "https://qul.tarteel.ai/resources/tafsir",
+  );
 });
 
 test("search finds companion text and links to the matching ayah", async ({ page }) => {

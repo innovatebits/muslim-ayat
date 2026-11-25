@@ -7,6 +7,8 @@ import {
   QuranSourceSchema,
   QuranTafsirMetadataSchema,
   QuranWordByWordMetadataSchema,
+  preserveQuranSourceRights,
+  UNKNOWN_QURAN_RIGHTS_REVIEW,
 } from "@muslim-ayat/quran-data";
 import {
   buildQulTafsirIndex,
@@ -74,34 +76,47 @@ try {
     throw new Error("The QUL study exports do not match the reviewed verse and word coverage.");
   }
 
-  const tafsirSource = QuranSourceSchema.parse({
-    source: "Quranic Universal Library (QUL), user-supplied local export",
-    edition:
-      "Abridged Explanation of the Quran (6,236-verse JSON export; QUL resource ID and original rights holder not independently verified)",
-    attributionNote:
-      "The local export's exact catalogue entry and rights holder could not be independently verified. Rights remain unknown; no redistribution clearance is claimed.",
-    license: null,
-    rightsStatus: "unknown",
-    url: "https://qul.tarteel.ai/resources/tafsir",
-    sha256: checksum(tafsirBytes),
-    verifiedAt,
-  });
+  const previousTafsirMetadata = QuranTafsirMetadataSchema.parse(
+    JSON.parse(await readFile(tafsirMetadataPath, "utf8")) as unknown,
+  );
+  const previousWordByWordMetadata = QuranWordByWordMetadataSchema.parse(
+    JSON.parse(await readFile(wordByWordMetadataPath, "utf8")) as unknown,
+  );
+
+  const tafsirSource = preserveQuranSourceRights(
+    QuranSourceSchema.parse({
+      source: "Quranic Universal Library (QUL), user-supplied local export",
+      edition:
+        "Abridged Explanation of the Quran (6,236-verse JSON export; QUL resource ID and original rights holder not independently verified)",
+      attributionNote:
+        "The local export's exact catalogue entry and rights holder could not be independently verified. Rights remain unknown; no redistribution clearance is claimed.",
+      license: null,
+      url: "https://qul.tarteel.ai/resources/tafsir",
+      sha256: checksum(tafsirBytes),
+      verifiedAt,
+      rightsReview: UNKNOWN_QURAN_RIGHTS_REVIEW,
+    }),
+    previousTafsirMetadata.source,
+  );
   const wordByWordSource = QuranWordByWordMetadataSchema.parse({
     id: "english-word-by-word",
     name: "English Word-by-Word Translation",
     locale: "en",
     kind: "word-by-word-translation",
-    source: {
-      source: "Quranic Universal Library (QUL)",
-      edition: "English Word by Word Translation, simple JSON, resource 92",
-      attributionNote:
-        "QUL's resource page does not provide copyright information. Rights remain unknown; no licence or redistribution clearance is claimed. Three indexed word positions have no English gloss and are left unfilled.",
-      license: null,
-      rightsStatus: "unknown",
-      url: "https://qul.tarteel.ai/resources/translation/92",
-      sha256: checksum(wordByWordBytes),
-      verifiedAt,
-    },
+    source: preserveQuranSourceRights(
+      {
+        source: "Quranic Universal Library (QUL)",
+        edition: "English Word by Word Translation, simple JSON, resource 92",
+        attributionNote:
+          "QUL's resource page does not provide copyright information. Rights remain unknown; no licence or redistribution clearance is claimed. Three indexed word positions have no English gloss and are left unfilled.",
+        license: null,
+        url: "https://qul.tarteel.ai/resources/translation/92",
+        sha256: checksum(wordByWordBytes),
+        verifiedAt,
+        rightsReview: UNKNOWN_QURAN_RIGHTS_REVIEW,
+      },
+      previousWordByWordMetadata.source,
+    ),
   });
   const tafsirMetadata = QuranTafsirMetadataSchema.parse({
     id: "qul-abridged-explanation",

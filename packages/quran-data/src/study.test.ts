@@ -7,8 +7,8 @@ describe("Quran study resource access", () => {
 
     expect(ayah?.tafsir.length).toBeGreaterThan(100);
     expect(ayah?.words[0]).toMatchObject({ number: 1, gloss: "In (the) name" });
-    expect(ayah?.sources.tafsir.rightsStatus).toBe("unknown");
-    expect(ayah?.sources.wordByWord.rightsStatus).toBe("unknown");
+    expect(ayah?.sources.tafsir.rightsReview.reviewStatus).toBe("unreviewed");
+    expect(ayah?.sources.wordByWord.rightsReview.reviewStatus).toBe("unreviewed");
   });
 
   it("leaves missing word glosses empty instead of filling them", () => {
@@ -21,8 +21,11 @@ describe("Quran study resource access", () => {
   it("rejects invalid Quran references and exposes study source records", () => {
     expect(getStudyAyah(1, 8)).toBeUndefined();
     expect(getStudySources()).toMatchObject([
-      { kind: "tafsir", source: { rightsStatus: "unknown" } },
-      { kind: "word-by-word-translation", source: { rightsStatus: "unknown" } },
+      { kind: "tafsir", source: { rightsReview: { reviewStatus: "unreviewed" } } },
+      {
+        kind: "word-by-word-translation",
+        source: { rightsReview: { reviewStatus: "unreviewed" } },
+      },
     ]);
   });
 });

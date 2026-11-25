@@ -26,9 +26,22 @@ describe("AlQuran Cloud recitation references", () => {
     expect(QURAN_AUDIO_SOURCE).toMatchObject({
       provider: "AlQuran Cloud CDN",
       delivery: "external-stream",
-      rightsStatus: "unknown",
+      providerTermsRightsReview: {
+        reviewStatus: "unreviewed",
+        permissions: {
+          publicDisplay: "unknown",
+          redistribution: "unknown",
+          offlineCaching: "unknown",
+          commercialUse: "unknown",
+        },
+      },
     });
     expect(QURAN_AUDIO_RECITERS.length).toBeGreaterThan(1);
+    expect(
+      QURAN_AUDIO_RECITERS.every(
+        (reciter) => reciter.recordingPerformanceRights.reviewStatus === "unreviewed",
+      ),
+    ).toBe(true);
     expect(isAudioFeatureEnabled("false")).toBe(false);
     expect(isAudioFeatureEnabled("true")).toBe(true);
     expect(isAudioFeatureEnabled(undefined)).toBe(true);

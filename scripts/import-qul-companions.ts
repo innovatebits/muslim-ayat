@@ -5,6 +5,8 @@ import { strFromU8, unzipSync } from "fflate";
 import {
   buildQulTextResource,
   QuranCompanionBundleSchema,
+  preserveQuranSourceRights,
+  UNKNOWN_QURAN_RIGHTS_REVIEW,
   type QuranTextResourceMetadata,
 } from "@muslim-ayat/quran-data";
 
@@ -26,10 +28,10 @@ const resources = [
         source: "Quranic Universal Library (QUL)",
         edition: "Saheeh International, simple JSON, ayah-by-ayah (resource 193)",
         license: null,
-        rightsStatus: "unknown",
         url: "https://qul.tarteel.ai/resources/translation/193",
         sha256: "",
         verifiedAt: "2026-11-24T20:48:23.376Z",
+        rightsReview: UNKNOWN_QURAN_RIGHTS_REVIEW,
       },
     } satisfies Omit<QuranTextResourceMetadata, "source"> & {
       source: Omit<QuranTextResourceMetadata["source"], "sha256"> & { sha256: string };
@@ -48,10 +50,10 @@ const resources = [
         source: "Quranic Universal Library (QUL)",
         edition: "English Transliteration (Tajweed), simple JSON (resource export)",
         license: null,
-        rightsStatus: "unknown",
         url: "https://qul.tarteel.ai/resources/transliteration",
         sha256: "",
         verifiedAt: "2026-11-24T20:48:23.376Z",
+        rightsReview: UNKNOWN_QURAN_RIGHTS_REVIEW,
       },
     } satisfies Omit<QuranTextResourceMetadata, "source"> & {
       source: Omit<QuranTextResourceMetadata["source"], "sha256"> & { sha256: string };
@@ -59,7 +61,10 @@ const resources = [
   },
 ] as const;
 
-async function loadResource(resource: (typeof resources)[number]) {
+async function loadResource(
+  resource: (typeof resources)[number],
+  previousBundle: ReturnType<typeof QuranCompanionBundleSchema.parse>,
+) {
   let sourceBytes: Uint8Array;
   if (resource.archiveArgument) {
     const archiveBytes = await readFile(resolve(resource.archiveArgument));
@@ -76,9 +81,20 @@ async function loadResource(resource: (typeof resources)[number]) {
   }
 
   const checksum = createHash("sha256").update(sourceBytes).digest("hex");
+  const previousResource =
+    resource.metadata.kind === "translation"
+      ? previousBundle.translations.find((candidate) => candidate.id === resource.metadata.id)
+      : previousBundle.transliterations.find((candidate) => candidate.id === resource.metadata.id);
   const metadata: QuranTextResourceMetadata = {
     ...resource.metadata,
-    source: { ...resource.metadata.source, sha256: checksum },
+    source: preserveQuranSourceRights(
+      {
+        ...resource.metadata.source,
+        sha256: checksum,
+        verifiedAt: new Date().toISOString(),
+      },
+      previousResource?.source,
+    ),
   };
 
   return buildQulTextResource(JSON.parse(strFromU8(sourceBytes)) as unknown, metadata);
@@ -89,8 +105,11 @@ try {
     throw new Error("Provide both the translation and transliteration ZIP paths, or neither.");
   }
 
-  const translation = await loadResource(resources[0]);
-  const transliteration = await loadResource(resources[1]);
+  const previousBundle = QuranCompanionBundleSchema.parse(
+    JSON.parse(await readFile(companionPath, "utf8")) as unknown,
+  );
+  const translation = await loadResource(resources[0], previousBundle);
+  const transliteration = await loadResource(resources[1], previousBundle);
   const bundle = QuranCompanionBundleSchema.parse({
     translations: [translation],
     transliterations: [transliteration],

@@ -2,6 +2,11 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { strFromU8, unzipSync } from "fflate";
+import {
+  preserveQuranSourceRights,
+  QuranSourceSchema,
+  UNKNOWN_QURAN_RIGHTS_REVIEW,
+} from "@muslim-ayat/quran-data";
 
 const [archiveArgument] = process.argv.slice(2);
 const sourcePath = resolve("packages/quran-data/src/data/source/surah-name-header-svg.zip");
@@ -40,17 +45,23 @@ try {
     }
   }
 
-  const source = {
-    source: "Quranic Universal Library (QUL)",
-    edition: "Surah name header SVG collection, resource 592; 113 files for Surahs 2–114",
-    attributionNote:
-      'The SVG files credit Naveed Ahmad and Muath Ahmed Ibn-Hassan and state "CC BY 4.0". QUL’s resource page says copyright information is unavailable, so rights remain unknown pending confirmation.',
-    license: null,
-    rightsStatus: "unknown",
-    url: "https://qul.tarteel.ai/resources/font/surah-name-header-svg",
-    sha256: createHash("sha256").update(archiveBytes).digest("hex"),
-    verifiedAt: new Date().toISOString(),
-  };
+  const previousSource = QuranSourceSchema.parse(
+    JSON.parse(await readFile(metadataPath, "utf8")) as unknown,
+  );
+  const source = preserveQuranSourceRights(
+    QuranSourceSchema.parse({
+      source: "Quranic Universal Library (QUL)",
+      edition: "Surah name header SVG collection, resource 592; 113 files for Surahs 2–114",
+      attributionNote:
+        'The SVG files credit Naveed Ahmad and Muath Ahmed Ibn-Hassan and state "CC BY 4.0". QUL’s resource page says copyright information is unavailable, so rights remain unknown pending confirmation.',
+      license: null,
+      url: "https://qul.tarteel.ai/resources/font/surah-name-header-svg",
+      sha256: createHash("sha256").update(archiveBytes).digest("hex"),
+      verifiedAt: new Date().toISOString(),
+      rightsReview: UNKNOWN_QURAN_RIGHTS_REVIEW,
+    }),
+    previousSource,
+  );
 
   await mkdir(dirname(sourcePath), { recursive: true });
   await mkdir(outputDirectory, { recursive: true });
