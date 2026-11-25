@@ -50,6 +50,7 @@ export function ReaderSettings() {
               </span>
             </span>
           </label>
+          {featureFlags.mushafLayout ? (
           <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[var(--line)] p-4">
             <input
               checked={preferences.readingMode === "mushaf"}
@@ -65,6 +66,7 @@ export function ReaderSettings() {
               </span>
             </span>
           </label>
+          ) : null}
         </div>
       </fieldset>
 
