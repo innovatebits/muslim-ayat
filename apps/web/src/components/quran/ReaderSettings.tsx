@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { featureFlags } from "@/lib/features";
 import {
   useReaderPreferences,
   type ReaderPreferences,
@@ -68,6 +69,7 @@ export function ReaderSettings() {
       </fieldset>
 
       <div className="grid gap-6 sm:grid-cols-2">
+        {featureFlags.translations ? (
         <label className="rounded-2xl border border-[var(--line)] bg-white/80 p-5">
           <span className="block text-sm font-semibold text-[var(--green)]">Translation</span>
           <select
@@ -88,7 +90,9 @@ export function ReaderSettings() {
             More attributed translations may be offered in future releases.
           </span>
         </label>
+        ) : null}
 
+        {featureFlags.transliteration ? (
         <label className="flex items-start gap-3 rounded-2xl border border-[var(--line)] bg-white/80 p-5">
           <input
             checked={preferences.showTransliteration}
@@ -105,6 +109,7 @@ export function ReaderSettings() {
             </span>
           </span>
         </label>
+        ) : null}
       </div>
 
       <label className="block max-w-sm rounded-2xl border border-[var(--line)] bg-white/80 p-5">
