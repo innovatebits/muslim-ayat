@@ -13,7 +13,8 @@ export const metadata: Metadata = {
   description: "Review your private Quran bookmarks and notes.",
 };
 
-export default async function BookmarksPage() {\n  if (!featureFlags.bookmarks && !featureFlags.notes) notFound();
+export default async function BookmarksPage() {
+  if (!featureFlags.bookmarks && !featureFlags.notes) notFound();
   const personalData = await getPersonalData();
   const surahs = getSurahIndex();
 
@@ -43,6 +44,7 @@ export default async function BookmarksPage() {\n  if (!featureFlags.bookmarks &
           </div>
         ) : (
           <div className="mt-6 grid gap-8 md:grid-cols-2">
+            {featureFlags.bookmarks ? (
             <section>
               <h2 className="text-xl font-semibold text-[var(--green)]">Bookmarks</h2>
               {personalData.bookmarks.length ? (
@@ -68,7 +70,9 @@ export default async function BookmarksPage() {\n  if (!featureFlags.bookmarks &
                 <p className="mt-3 text-sm text-[var(--muted)]">No bookmarks yet. Save an ayah from the reader.</p>
               )}
             </section>
+            ) : null}
 
+            {featureFlags.notes ? (
             <section>
               <h2 className="text-xl font-semibold text-[var(--green)]">Notes</h2>
               {personalData.notes.length ? (
@@ -97,6 +101,7 @@ export default async function BookmarksPage() {\n  if (!featureFlags.bookmarks &
                 <p className="mt-3 text-sm text-[var(--muted)]">No notes yet. Add a private note from an ayah.</p>
               )}
             </section>
+            ) : null}
           </div>
         )}
       </section>
