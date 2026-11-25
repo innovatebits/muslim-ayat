@@ -20,7 +20,7 @@ type SurahReaderProps = {
 export function SurahReader({ surah, previousSurah, nextSurah }: SurahReaderProps) {
   const { preferences } = useReaderPreferences();
   const [selectedAyah, setSelectedAyah] = useState(1);
-  const isMushaf = preferences.readingMode === "mushaf";
+  const isMushaf = featureFlags.mushafLayout && preferences.readingMode === "mushaf";
   const arabicSize = preferences.arabicFontSize === "large" ? "text-4xl" : "text-3xl";
   const headerImage =
     surah.number > 1 ? `/surah-headers/surah-${String(surah.number).padStart(3, "0")}.svg` : null;
@@ -52,7 +52,7 @@ export function SurahReader({ surah, previousSurah, nextSurah }: SurahReaderProp
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#72907b]">
             {surah.ayahCount} ayahs
           </p>
-          {isMushaf && headerImage ? (
+          {isMushaf && featureFlags.surahHeaders && headerImage ? (
             <Image
               alt=""
               aria-hidden="true"
