@@ -1,0 +1,16 @@
+{
+  "id": "english-word-by-word",
+  "name": "English Word-by-Word Translation",
+  "locale": "en",
+  "kind": "word-by-word-translation",
+  "source": {
+    "source": "Quranic Universal Library (QUL)",
+    "edition": "English Word by Word Translation, simple JSON, resource 92",
+    "attributionNote": "QUL's resource page does not provide copyright information. Rights remain unknown; no licence or redistribution clearance is claimed. Three indexed word positions have no English gloss and are left unfilled.",
+    "license": null,
+    "rightsStatus": "unknown",
+    "url": "https://qul.tarteel.ai/resources/translation/92",
+    "sha256": "42992eec66ae5dd98659cda9bff9d350def46d953edb2622a8e3a444d56313b9",
+    "verifiedAt": "2026-11-24T23:13:21.229Z"
+  }
+}

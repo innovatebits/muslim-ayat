@@ -1,0 +1,20 @@
+{
+  "name": "@muslim-ayat/quran-data",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./audio": "./src/audio.ts",
+    "./reader": "./src/reader.ts",
+    "./study": "./src/study.ts",
+    "./study-import": "./src/study-import.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.24.2"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "qul-abridged-explanation",
+  "name": "Abridged Explanation of the Quran",
+  "locale": "en",
+  "kind": "tafsir",
+  "source": {
+    "source": "Quranic Universal Library (QUL), user-supplied local export",
+    "edition": "Abridged Explanation of the Quran (6,236-verse JSON export; QUL resource ID and original rights holder not independently verified)",
+    "attributionNote": "The local export's exact catalogue entry and rights holder could not be independently verified. Rights remain unknown; no redistribution clearance is claimed.",
+    "license": null,
+    "rightsStatus": "unknown",
+    "url": "https://qul.tarteel.ai/resources/tafsir",
+    "sha256": "8f30054ea8b5f1e19b78fbe2b30cca5998da31583a9902a9b7301cd5e81ea766",
+    "verifiedAt": "2026-11-24T23:13:21.229Z"
+  }
+}
