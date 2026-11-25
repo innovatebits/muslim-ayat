@@ -9,6 +9,7 @@ import { cachePublicSurah } from "@/lib/offline/repository";
 import { PersonalAyahControls } from "./PersonalAyahControls";
 import { StudyAid } from "./StudyAid";
 import { useReaderPreferences } from "./ReaderPreferences";
+import { featureFlags } from "@/lib/features";
 
 type SurahReaderProps = {
   surah: QuranReaderSurah;
@@ -111,13 +112,17 @@ export function SurahReader({ surah, previousSurah, nextSurah }: SurahReaderProp
         ) : null}
       </nav>
 
-      <PersonalAyahControls ayahNumber={selectedAyah} surahNumber={surah.number} />
-      <AyahAudioPlayer
-        ayahCount={surah.ayahCount}
-        ayahNumber={selectedAyah}
-        onAyahChange={navigateToAyah}
-        surahNumber={surah.number}
-      />
+      {(featureFlags.bookmarks || featureFlags.notes || featureFlags.readingProgress) ? (
+        <PersonalAyahControls ayahNumber={selectedAyah} surahNumber={surah.number} />
+      ) : null}
+      {featureFlags.audio ? (
+        <AyahAudioPlayer
+          ayahCount={surah.ayahCount}
+          ayahNumber={selectedAyah}
+          onAyahChange={navigateToAyah}
+          surahNumber={surah.number}
+        />
+      ) : null}
 
       <div
         className={
@@ -157,17 +162,19 @@ export function SurahReader({ surah, previousSurah, nextSurah }: SurahReaderProp
             >
               {ayah.textUthmani}
             </p>
-            {preferences.showTransliteration && ayah.transliteration ? (
+            {featureFlags.transliteration && preferences.showTransliteration && ayah.transliteration ? (
               <p className="mt-4 text-sm leading-6 text-[#49715d]" lang="en-Latn">
                 {ayah.transliteration}
               </p>
             ) : null}
-            {preferences.translationId !== "none" && ayah.translation ? (
+            {featureFlags.translations && preferences.translationId !== "none" && ayah.translation ? (
               <p className="mt-3 text-sm leading-7 text-[var(--ink)] sm:text-base">
                 {ayah.translation}
               </p>
             ) : null}
-            <StudyAid ayahNumber={ayah.number} surahNumber={surah.number} />
+            {(featureFlags.tafsir || featureFlags.wordByWord) ? (
+              <StudyAid ayahNumber={ayah.number} surahNumber={surah.number} />
+            ) : null}
           </article>
         ))}
       </div>
