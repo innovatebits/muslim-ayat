@@ -28,9 +28,7 @@ export default async function AccountPage() {
           ← Quran reader
         </Link>
         <nav aria-label="Account navigation" className="flex gap-4 text-sm">
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">
-            Bookmarks
-          </Link>
+          {featureFlags.bookmarks || featureFlags.notes ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">Saved items</Link> : null}
           <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/sign-in">
             Sign in
           </Link>
