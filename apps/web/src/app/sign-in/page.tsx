@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   sendEmailOtpAction,
   sendMagicLinkAction,
+  sendPasswordResetAction,
   signInWithPasswordAction,
   signInWithProviderAction,
   signUpWithPasswordAction,
@@ -22,6 +23,7 @@ const errorMessages: Record<string, string> = {
   oauth: "Social sign-in could not be completed. Check the provider configuration and try again.",
   setup: "Authentication is not configured. Add the Supabase URL and publishable key.",
   "method-disabled": "That sign-in method is disabled for this deployment.",
+  "password-reset": "Your password could not be updated. Request another reset link and try again.",
   "invalid-input": "Check the email address and password or verification code.",
   credentials: "The email address or password is incorrect.",
   signup: "Your account could not be created. Check the details and try again.",
@@ -44,6 +46,7 @@ export default async function SignInPage({
   const emailPasswordEnabled = featureFlags.authEmailPassword;
   const otpEnabled = featureFlags.authEmailOtp;
   const magicLinkEnabled = featureFlags.authMagicLink;
+  const passwordResetEnabled = featureFlags.authPasswordReset;
 
   return (
     <main className="mx-auto min-h-screen max-w-4xl px-5 pb-16 pt-6 sm:px-8">
@@ -77,6 +80,7 @@ export default async function SignInPage({
         </section>
       ) : null}
       {params.notice === "magic-link-sent" ? <p className="mt-6 rounded-xl border border-[var(--line)] bg-white p-4 text-sm" role="status">Check your email for a sign-in link. Open it in this browser to finish signing in.</p> : null}
+      {params.notice === "password-reset-sent" ? <p className="mt-6 rounded-xl border border-[var(--line)] bg-white p-4 text-sm" role="status">If an account exists for that address, a password reset email has been sent.</p> : null}
 
       {!configured ? (
         <p className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-950" role="status">
@@ -106,6 +110,12 @@ export default async function SignInPage({
                 <label className="text-xs font-medium">Password<input autoComplete="current-password" className={fieldClass} name="password" required type="password" /></label>
                 <button className={buttonClass + " sm:col-span-2"} type="submit">Sign in</button>
               </form>
+              {passwordResetEnabled ? (
+                <form action={sendPasswordResetAction} className="mt-3 flex flex-wrap items-end gap-3">
+                  <label className="min-w-0 flex-1 text-xs font-medium">Forgot password? Enter your email<input autoComplete="email" className={fieldClass} name="email" required type="email" /></label>
+                  <button className="rounded-full border border-[var(--green)] px-4 py-2.5 text-sm font-medium text-[var(--green)]" type="submit">Send reset link</button>
+                </form>
+              ) : null}
               <div className="my-5 border-t border-[var(--line)]" />
               <h3 className="text-sm font-semibold text-[var(--green)]">Create an account</h3>
               <form action={signUpWithPasswordAction} className="mt-3 grid gap-3 sm:grid-cols-2">
