@@ -38,7 +38,7 @@ export default function QuranPage() {
           Browse QUL Uthmani text alongside the Saheeh International translation and English
           transliteration. Source and rights information is shown with each edition.
         </p>
-        <form action="/search" className="mt-7 flex max-w-xl gap-3" method="get" role="search">
+        {featureFlags.search ? (\n        <form action="/search" className="mt-7 flex max-w-xl gap-3" method="get" role="search">
           <label className="sr-only" htmlFor="quran-search">
             Search Arabic, translation, or transliteration
           </label>
