@@ -20,18 +20,10 @@ export default function QuranPage() {
           Muslim Ayat
         </Link>
         <nav aria-label="Reader navigation" className="flex flex-wrap items-center gap-5 text-sm">
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/search">
-            Search
-          </Link>
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/settings">
-            Reading settings
-          </Link>
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">
-            Bookmarks
-          </Link>
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/account">
-            Account
-          </Link>
+          {featureFlags.search ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/search">Search</Link> : null}
+          {featureFlags.readerPreferences ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/settings">Reading settings</Link> : null}
+          {featureFlags.bookmarks || featureFlags.notes ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">Saved items</Link> : null}
+          {featureFlags.accountProfile || featureFlags.bookmarks || featureFlags.notes || featureFlags.readingProgress ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/account">Account</Link> : null}
         </nav>
       </header>
 
