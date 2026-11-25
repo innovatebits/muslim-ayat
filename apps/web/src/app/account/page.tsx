@@ -110,10 +110,10 @@ export default async function AccountPage() {
               <article className="rounded-2xl border border-[var(--line)] bg-white/80 p-5">
                 <h2 className="text-lg font-semibold text-[var(--green)]">Personal items</h2>
                 <p className="mt-3 text-sm text-[var(--muted)]">
-                  {personalData.bookmarks.length} bookmarks · {personalData.notes.length} recent notes
+                  {featureFlags.bookmarks ? `${personalData.bookmarks.length} bookmarks` : null}{featureFlags.bookmarks && featureFlags.notes ? " · " : null}{featureFlags.notes ? `${personalData.notes.length} recent notes` : null}
                 </p>
                 <Link className="mt-3 inline-block text-sm font-medium text-[var(--green)] hover:underline" href="/bookmarks">
-                  Manage bookmarks and notes
+                  Manage saved items
                 </Link>
               </article>
               ) : null}
