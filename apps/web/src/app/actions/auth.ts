@@ -103,12 +103,13 @@ export async function sendEmailOtpAction(formData: FormData) {
   const email = value(formData, "email").toLowerCase();
   if (!validEmail(email)) redirect("/sign-in?error=invalid-input");
 
+  const emailRedirectTo = getCallbackUrl();
   let failed = false;
   try {
     const client = await createClient();
     const { error } = await client.auth.signInWithOtp({
       email,
-      options: { shouldCreateUser: true },
+      options: { emailRedirectTo, shouldCreateUser: true },
     });
     failed = Boolean(error);
   } catch {
@@ -170,11 +171,12 @@ export async function sendPasswordResetAction(formData: FormData) {
   const email = value(formData, "email").toLowerCase();
   if (!validEmail(email)) redirect("/sign-in?error=invalid-input");
 
-  const redirectTo = getCallbackUrl();
+  const resetUrl = new URL(getCallbackUrl());
+  resetUrl.searchParams.set("next", "/reset-password");
   let failed = false;
   try {
     const client = await createClient();
-    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
+    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: resetUrl.toString() });
     failed = Boolean(error);
   } catch {
     failed = true;
@@ -194,6 +196,8 @@ export async function updatePasswordAction(formData: FormData) {
   let failed = false;
   try {
     const client = await createClient();
+    const { data: authData, error: authError } = await client.auth.getUser();
+    if (authError || !authData.user) redirect("/sign-in?error=auth");
     const { error } = await client.auth.updateUser({ password });
     failed = Boolean(error);
   } catch {
