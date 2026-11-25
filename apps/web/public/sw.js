@@ -1,4 +1,5 @@
-const CACHE_NAME = "muslim-ayat-public-v2";
+const CACHE_NAME = "muslim-ayat-public-v3";
+const MAX_CACHE_ENTRIES = 256;
 const PRECACHE_URLS = [
   "/offline.html",
   "/icons/icon.svg",
@@ -22,11 +23,24 @@ function canCachePublicReaderResponse(response) {
   );
 }
 
+async function putInBoundedCache(cache, request, response) {
+  await cache.put(request, response.clone());
+  const cachedRequests = await cache.keys();
+  const excessCount = cachedRequests.length - MAX_CACHE_ENTRIES;
+  if (excessCount > 0) {
+    await Promise.all(cachedRequests.slice(0, excessCount).map((cachedRequest) => cache.delete(cachedRequest)));
+  }
+}
+
 async function fetchAndCachePublicPage(request) {
   const response = await fetch(request);
   if (canCachePublicReaderResponse(response)) {
-    const cache = await caches.open(CACHE_NAME);
-    await cache.put(request, response.clone());
+    try {
+      const cache = await caches.open(CACHE_NAME);
+      await putInBoundedCache(cache, request, response);
+    } catch {
+      return response;
+    }
   }
   return response;
 }
@@ -80,24 +94,36 @@ self.addEventListener("fetch", (event) => {
 
   if (!isPublicStaticAsset && !isPublicReaderData) return;
 
-  event.respondWith(
-    caches.open(CACHE_NAME).then(async (cache) => {
+  event.respondWith((async () => {
+    let cache;
+    try {
+      cache = await caches.open(CACHE_NAME);
       const cachedResponse = await cache.match(request);
       if (cachedResponse) return cachedResponse;
+    } catch {
+      return fetch(request);
+    }
 
-      const response = await fetch(request);
-      const cacheControl = response.headers.get("Cache-Control") ?? "";
-      if (
-        isPublicStaticAsset &&
-        response.ok &&
-        !/private|no-store/i.test(cacheControl) &&
-        !response.headers.has("Set-Cookie")
-      ) {
-        await cache.put(request, response.clone());
-      } else if (isPublicReaderData && canCachePublicReaderResponse(response)) {
-        await cache.put(request, response.clone());
+    const response = await fetch(request);
+    const cacheControl = response.headers.get("Cache-Control") ?? "";
+    if (
+      isPublicStaticAsset &&
+      response.ok &&
+      !/private|no-store/i.test(cacheControl) &&
+      !response.headers.has("Set-Cookie")
+    ) {
+      try {
+        await putInBoundedCache(cache, request, response);
+      } catch {
+        return response;
       }
-      return response;
-    }),
-  );
+    } else if (isPublicReaderData && canCachePublicReaderResponse(response)) {
+      try {
+        await putInBoundedCache(cache, request, response);
+      } catch {
+        return response;
+      }
+    }
+    return response;
+  })());
 });

@@ -1,11 +1,10 @@
 import "fake-indexeddb/auto";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
-  cachePublicSurah,
-  getCachedPublicSurah,
   getOwnerOfflineData,
   getOwnerOutbox,
   getOwnerNotes,
+  OFFLINE_DATABASE_NAME,
   resetOfflineDatabaseForTests,
   saveLocalBookmark,
   saveLocalNote,
@@ -29,23 +28,53 @@ afterEach(async () => {
 });
 
 describe("IndexedDB offline repository", () => {
-  it("persists public Quran content separately from owner data", async () => {
-    const surah = {
-      number: 1,
-      nameArabic: "الفاتحة",
-      nameTransliteration: "Al-Fātiĥah",
-      ayahCount: 1,
-      ayahs: [{ number: 1, textUthmani: "بِسْمِ اللَّهِ", translation: "In the name of Allah.", transliteration: "Bismillah" }],
+  it("removes the write-only Quran store on upgrade without losing personal records", async () => {
+    const ownerId = "00000000-0000-4000-8000-000000000101";
+    const bookmark = {
+      key: `${ownerId}:1:1`,
+      ownerId,
+      surahNumber: 1,
+      ayahNumber: 1,
+      clientUpdatedAt: "2026-01-01T00:00:00.000Z",
+      syncOperationId: "00000000-0000-4000-8000-000000000102",
+      isDeleted: false,
     };
 
-    await cachePublicSurah(surah);
-
-    expect(await getCachedPublicSurah(1)).toMatchObject({
-      key: "surah:1",
-      surahNumber: 1,
-      content: surah,
+    await new Promise<void>((resolve, reject) => {
+      const request = indexedDB.open(OFFLINE_DATABASE_NAME, 1);
+      request.onupgradeneeded = () => {
+        const database = request.result;
+        const publicQuran = database.createObjectStore("publicQuran", { keyPath: "key" });
+        publicQuran.put({ key: "surah:1", surahNumber: 1 });
+        const bookmarks = database.createObjectStore("bookmarks", { keyPath: "key" });
+        bookmarks.createIndex("byOwnerId", "ownerId");
+      };
+      request.onsuccess = () => {
+        const database = request.result;
+        const transaction = database.transaction("bookmarks", "readwrite");
+        transaction.objectStore("bookmarks").put(bookmark);
+        transaction.oncomplete = () => {
+          database.close();
+          resolve();
+        };
+        transaction.onerror = () => {
+          database.close();
+          reject(transaction.error);
+        };
+      };
+      request.onerror = () => reject(request.error);
     });
-    expect(await getCachedPublicSurah(2)).toBeUndefined();
+
+    expect((await getOwnerOfflineData(ownerId)).bookmarks).toEqual([bookmark]);
+
+    const database = await new Promise<IDBDatabase>((resolve, reject) => {
+      const request = indexedDB.open(OFFLINE_DATABASE_NAME);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    expect(database.version).toBe(2);
+    expect(Array.from(database.objectStoreNames)).not.toContain("publicQuran");
+    database.close();
   });
 
   it("coalesces repeated bookmark edits and isolates owners", async () => {
