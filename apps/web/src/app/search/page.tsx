@@ -79,12 +79,12 @@ export default async function SearchPage({
                     >
                       {result.textUthmani}
                     </p>
-                    {result.transliteration ? (
+                    {featureFlags.transliteration && result.transliteration ? (
                       <p className="mt-3 text-sm text-[#49715d]" lang="en-Latn">
                         {result.transliteration}
                       </p>
                     ) : null}
-                    {result.translation ? (
+                    {featureFlags.translations && result.translation ? (
                       <p className="mt-2 text-sm leading-6 text-[var(--ink)]">{result.translation}</p>
                     ) : null}
                     <Link
