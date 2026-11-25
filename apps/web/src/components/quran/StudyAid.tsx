@@ -16,7 +16,6 @@ export function StudyAid({ surahNumber, ayahNumber }: StudyAidProps) {
   const [studyAyah, setStudyAyah] = useState<QuranStudyAyah | null>(null);
   const [status, setStatus] = useState<LoadStatus>("idle");
   const panelId = `study-${surahNumber}-${ayahNumber}`;
-  if (!featureFlags.tafsir && !featureFlags.wordByWord) return null;
 
   useEffect(() => {
     if (!isOpen || studyAyah) return;
@@ -45,6 +44,8 @@ export function StudyAid({ surahNumber, ayahNumber }: StudyAidProps) {
       controller.abort();
     };
   }, [ayahNumber, isOpen, studyAyah, surahNumber]);
+
+  if (!featureFlags.tafsir && !featureFlags.wordByWord) return null;
 
   return (
     <section className="mt-5 border-t border-[var(--line)] pt-4">
