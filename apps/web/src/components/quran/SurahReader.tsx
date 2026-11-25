@@ -53,7 +53,7 @@ export function SurahReader({ surah, previousSurah, nextSurah }: SurahReaderProp
 
       <header className="reader-surah-hero">
         <div className="reader-surah-copy">
-          <p className="reader-eyebrow">SURAH {String(surah.number).padStart(3, "0")} <span>·</span> {surah.ayahCount} AYahs</p>
+          <p className="reader-eyebrow">SURAH {String(surah.number).padStart(3, "0")} <span>·</span> {surah.ayahCount} ayahs</p>
           <h1 className="reader-surah-title">{surah.nameTransliteration}</h1>
           <p className="reader-surah-meta">Chapter {surah.number} of 114</p>
         </div>
