@@ -52,7 +52,7 @@ bunx supabase test db
 
 ## Authentication
 
-Supabase Auth supports configurable Google, Microsoft, Facebook, email/password, email OTP and magic-link sign-in. Configure OAuth credentials, email templates, SMTP delivery and redirect URLs in Supabase; see [Supabase Auth documentation](https://supabase.com/docs/guides/auth).
+Supabase Auth supports configurable Google, Microsoft, Facebook, email/password (including password recovery), email OTP and magic-link sign-in. Configure OAuth credentials, email templates (OTP token and magic-link confirmation URL), SMTP delivery and redirect URLs in Supabase; see [Supabase Auth documentation](https://supabase.com/docs/guides/auth).
 
 ## Feature configuration
 
