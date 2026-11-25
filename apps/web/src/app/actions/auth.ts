@@ -75,7 +75,7 @@ export async function signUpWithPasswordAction(formData: FormData) {
   requireAuthSetup();
   if (!isFeatureEnabled("authEmailPassword")) redirect("/sign-in?error=method-disabled");
   const email = value(formData, "email").toLowerCase();
-  const password = value(formData, "password");
+  const password = rawValue(formData, "password");
   if (!validEmail(email) || password.length < 8) redirect("/sign-in?error=invalid-input");
 
   const emailRedirectTo = getCallbackUrl();
