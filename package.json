@@ -22,6 +22,7 @@
     "import:quran-metadata": "bun run scripts/import-qul-surah-metadata.ts",
     "import:quran-surah-headers": "bun run scripts/import-qul-surah-headers.ts",
     "import:quran-study": "bun run scripts/import-qul-study.ts",
+    "report:content-rights": "bun run scripts/report-content-rights.ts",
     "generate:pwa-icons": "bun run scripts/generate-pwa-icons.ts",
     "validate:quran-data": "bun run scripts/validate-quran-data.ts",
     "generate:quran-index": "bun run scripts/generate-quran-index.ts",

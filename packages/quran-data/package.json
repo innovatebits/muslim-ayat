@@ -7,6 +7,7 @@
     ".": "./src/index.ts",
     "./audio": "./src/audio.ts",
     "./reader": "./src/reader.ts",
+    "./rights-report": "./src/rights-report.ts",
     "./study": "./src/study.ts",
     "./study-import": "./src/study-import.ts"
   },

@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { buildQulTextResource, SURAH_AYAH_COUNTS } from "./index";
+import { buildQulTextResource, SURAH_AYAH_COUNTS, UNKNOWN_QURAN_RIGHTS_REVIEW } from "./index";
 
 const source = {
   source: "Quranic Universal Library (QUL)",
   edition: "Saheeh International simple JSON",
   license: null,
-  rightsStatus: "unknown" as const,
   url: "https://qul.tarteel.ai/resources/translation/193",
   sha256: "a".repeat(64),
   verifiedAt: "2026-11-24T20:34:27.044Z",
+  rightsReview: UNKNOWN_QURAN_RIGHTS_REVIEW,
 };
 
 function makeQulTextExport() {
@@ -39,7 +39,7 @@ describe("QUL companion text import", () => {
     expect(Object.keys(resource.verses)).toHaveLength(6236);
     expect(resource.verses["1:1"]).toBe("companion text 1");
     expect(resource.verses["114:6"]).toBe("companion text 6236");
-    expect(resource.source.rightsStatus).toBe("unknown");
+    expect(resource.source.rightsReview.reviewStatus).toBe("unreviewed");
   });
 
   it("rejects missing ayah entries", () => {

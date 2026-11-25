@@ -1,12 +1,15 @@
+import { z } from "zod";
 import companionsJson from "./data/companions.json";
 import quranJson from "./data/quran.json";
 import surahMetadataJson from "./data/surah-metadata.json";
 import surahHeaderSourceJson from "./data/surah-header-source.json";
 import tafsirMetadataJson from "./data/tafsir-source.json";
 import wordByWordMetadataJson from "./data/word-by-word-source.json";
+import { QURAN_AUDIO_RECITERS, QURAN_AUDIO_SOURCE } from "./audio";
 import {
   QuranCompanionBundleSchema,
   QuranCorpusSchema,
+  QuranRightsReviewSchema,
   QuranSourceSchema,
   QuranSurahMetadataSchema,
   QuranTafsirMetadataSchema,
@@ -49,22 +52,76 @@ export interface QuranSearchResult {
   transliteration: string | null;
 }
 
-export interface QuranContentSource {
-  id: string;
-  name: string;
-  kind:
-    | "arabic"
-    | "translation"
-    | "transliteration"
-    | "surah-metadata"
-    | "surah-header"
-    | "tafsir"
-    | "word-by-word-translation";
-  source: QuranSource;
-}
+export const QuranContentSourceSchema = z
+  .object({
+    id: z.string().min(1),
+    name: z.string().min(1),
+    kind: z.enum([
+      "arabic",
+      "translation",
+      "transliteration",
+      "surah-metadata",
+      "surah-header",
+      "tafsir",
+      "word-by-word-translation",
+      "audio",
+    ]),
+    source: z.string().min(1),
+    edition: z.string().min(1),
+    url: z.string().url(),
+    license: z.string().min(1).nullable(),
+    attributionNote: z.string().min(1).optional(),
+    rightsReview: QuranRightsReviewSchema,
+    integrity: z
+      .object({
+        sha256: z.string().regex(/^[a-f\d]{64}$/i),
+        verifiedAt: z.string().datetime(),
+      })
+      .strict()
+      .nullable(),
+  })
+  .strict();
+
+export const QuranContentSourcesSchema = z
+  .array(QuranContentSourceSchema)
+  .superRefine((sources, context) => {
+    const seenIds = new Set<string>();
+    sources.forEach((source, index) => {
+      if (seenIds.has(source.id)) {
+        context.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Duplicate Quran content source id: ${source.id}`,
+          path: [index, "id"],
+        });
+      }
+      seenIds.add(source.id);
+    });
+  });
+
+export type QuranContentSource = z.infer<typeof QuranContentSourceSchema>;
 
 function getResource(resources: QuranTextResource[], id: string) {
   return resources.find((resource) => resource.id === id);
+}
+
+function createContentSource(
+  id: string,
+  name: string,
+  kind: QuranContentSource["kind"],
+  source: QuranSource,
+): QuranContentSource {
+  return {
+    id,
+    name,
+    kind,
+    source: source.source,
+    edition: source.edition,
+    url: source.url,
+    license: source.license,
+    ...(source.attributionNote ? { attributionNote: source.attributionNote } : {}),
+    rightsReview: source.rightsReview,
+    integrity: { sha256: source.sha256, verifiedAt: source.verifiedAt },
+  };
 }
 
 function getSurahSummary(number: number): QuranSurahSummary | undefined {
@@ -157,50 +214,66 @@ export function searchQuran(query: string, limit = 50): QuranSearchResult[] {
 }
 
 export function getContentSources(): QuranContentSource[] {
-  return [
+  return QuranContentSourcesSchema.parse([
+    createContentSource(
+      "quran-uthmani",
+      "QUL Uthmani Simple",
+      "arabic",
+      corpus.source,
+    ),
+    ...companions.translations.map((resource) =>
+      createContentSource(resource.id, resource.name, "translation", resource.source),
+    ),
+    ...companions.transliterations.map((resource) =>
+      createContentSource(resource.id, resource.name, "transliteration", resource.source),
+    ),
+    createContentSource(
+      "qul-surah-metadata",
+      "QUL Surah names",
+      "surah-metadata",
+      surahMetadata.source,
+    ),
+    createContentSource(
+      "qul-surah-headers",
+      "QUL Surah name header images",
+      "surah-header",
+      surahHeaderSource,
+    ),
+    createContentSource(
+      tafsirMetadata.id,
+      tafsirMetadata.name,
+      tafsirMetadata.kind,
+      tafsirMetadata.source,
+    ),
+    createContentSource(
+      wordByWordMetadata.id,
+      wordByWordMetadata.name,
+      wordByWordMetadata.kind,
+      wordByWordMetadata.source,
+    ),
     {
-      id: "quran-uthmani",
-      name: "QUL Uthmani Simple",
-      kind: "arabic",
-      source: corpus.source,
+      id: "audio-provider-terms",
+      name: "AlQuran Cloud CDN provider terms",
+      kind: "audio",
+      source: QURAN_AUDIO_SOURCE.provider,
+      edition: "External ayah audio delivery and provider terms",
+      url: QURAN_AUDIO_SOURCE.documentationUrl,
+      license: null,
+      rightsReview: QURAN_AUDIO_SOURCE.providerTermsRightsReview,
+      integrity: null,
     },
-    ...companions.translations.map((resource) => ({
-      id: resource.id,
-      name: resource.name,
-      kind: "translation" as const,
-      source: resource.source,
+    ...QURAN_AUDIO_RECITERS.map((reciter) => ({
+      id: `audio-recording-${reciter.identifier}`,
+      name: `${reciter.englishName} recitation recording and performance`,
+      kind: "audio" as const,
+      source: QURAN_AUDIO_SOURCE.provider,
+      edition: `Ayah recitations for ${reciter.englishName} (${reciter.identifier})`,
+      url: QURAN_AUDIO_SOURCE.documentationUrl,
+      license: null,
+      rightsReview: reciter.recordingPerformanceRights,
+      integrity: null,
     })),
-    ...companions.transliterations.map((resource) => ({
-      id: resource.id,
-      name: resource.name,
-      kind: "transliteration" as const,
-      source: resource.source,
-    })),
-    {
-      id: "qul-surah-metadata",
-      name: "QUL Surah names",
-      kind: "surah-metadata" as const,
-      source: surahMetadata.source,
-    },
-    {
-      id: "qul-surah-headers",
-      name: "QUL Surah name header images",
-      kind: "surah-header" as const,
-      source: surahHeaderSource,
-    },
-    {
-      id: tafsirMetadata.id,
-      name: tafsirMetadata.name,
-      kind: tafsirMetadata.kind,
-      source: tafsirMetadata.source,
-    },
-    {
-      id: wordByWordMetadata.id,
-      name: wordByWordMetadata.name,
-      kind: wordByWordMetadata.kind,
-      source: wordByWordMetadata.source,
-    },
-  ];
+  ]);
 }
 
 export function getAvailableTranslations() {

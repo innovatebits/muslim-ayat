@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { QuranStudyAyahSchema, type QuranStudyAyah } from "@muslim-ayat/quran-data";
 import { featureFlags } from "@/lib/features";
+import { RightsReviewDetails } from "./RightsReviewDetails";
 
 type StudyAidProps = {
   surahNumber: number;
@@ -77,11 +78,21 @@ export function StudyAid({ surahNumber, ayahNumber }: StudyAidProps) {
                   Tafsir · Abridged Explanation of the Quran
                 </h3>
                 <p className="mt-1 text-xs text-[var(--muted)]">
-                  Commentary, not Quran text. Rights status: {studyAyah.sources.tafsir.rightsStatus}.{" "}
+                  Commentary, not Quran text. {studyAyah.sources.tafsir.source};{" "}
+                  {studyAyah.sources.tafsir.edition}.{" "}
                   <a className="underline" href={studyAyah.sources.tafsir.url} rel="noreferrer" target="_blank">
-                    Source details
+                    Source record
                   </a>
                 </p>
+                {studyAyah.sources.tafsir.attributionNote ? (
+                  <p className="mt-1 text-xs text-[var(--muted)]">
+                    Source attribution note: {studyAyah.sources.tafsir.attributionNote}
+                  </p>
+                ) : null}
+                <RightsReviewDetails
+                  label="Abridged Explanation of the Quran tafsir"
+                  rightsReview={studyAyah.sources.tafsir.rightsReview}
+                />
                 <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-[var(--ink)]">{studyAyah.tafsir}</p>
               </section>
               ) : null}
@@ -91,11 +102,21 @@ export function StudyAid({ surahNumber, ayahNumber }: StudyAidProps) {
                   English word-by-word glosses
                 </h3>
                 <p className="mt-1 text-xs text-[var(--muted)]">
-                  Glosses follow the source’s word positions; no missing text is reconstructed. Rights status: {studyAyah.sources.wordByWord.rightsStatus}.{" "}
+                  Glosses follow the source’s word positions; no missing text is reconstructed.{" "}
+                  {studyAyah.sources.wordByWord.source}; {studyAyah.sources.wordByWord.edition}.{" "}
                   <a className="underline" href={studyAyah.sources.wordByWord.url} rel="noreferrer" target="_blank">
-                    Source details
+                    Source record
                   </a>
                 </p>
+                {studyAyah.sources.wordByWord.attributionNote ? (
+                  <p className="mt-1 text-xs text-[var(--muted)]">
+                    Source attribution note: {studyAyah.sources.wordByWord.attributionNote}
+                  </p>
+                ) : null}
+                <RightsReviewDetails
+                  label="English word-by-word glosses"
+                  rightsReview={studyAyah.sources.wordByWord.rightsReview}
+                />
                 <ol className="mt-3 flex flex-wrap gap-2">
                   {studyAyah.words.map((word) => (
                     <li key={word.number} className="rounded-lg bg-[#f7f6ef] px-3 py-2 text-sm">

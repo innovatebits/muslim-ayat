@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { buildQulSurahMetadata, SURAH_AYAH_COUNTS } from "./index";
+import { buildQulSurahMetadata, SURAH_AYAH_COUNTS, UNKNOWN_QURAN_RIGHTS_REVIEW } from "./index";
 
 const source = {
   source: "Quranic Universal Library (QUL)",
   edition: "Surah names - quran-metadata (Surah by Surah), resource 70",
   license: null,
-  rightsStatus: "unknown" as const,
   url: "https://qul.tarteel.ai/resources/quran-metadata/70",
   sha256: "a".repeat(64),
   verifiedAt: "2026-11-24T20:48:23.376Z",
+  rightsReview: UNKNOWN_QURAN_RIGHTS_REVIEW,
 };
 
 function makeSurahExport() {
@@ -44,7 +44,7 @@ describe("QUL surah metadata import", () => {
       nameArabic: "سورة",
       ayahCount: 7,
     });
-    expect(metadata.source.rightsStatus).toBe("unknown");
+    expect(metadata.source.rightsReview.reviewStatus).toBe("unreviewed");
   });
 
   it("rejects missing surahs and incorrect ayah counts", () => {

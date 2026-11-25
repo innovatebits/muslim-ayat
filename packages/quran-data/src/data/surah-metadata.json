@@ -3,10 +3,23 @@
     "source": "Quranic Universal Library (QUL)",
     "edition": "Surah names - quran-metadata (Surah by Surah), resource 70",
     "license": null,
-    "rightsStatus": "unknown",
     "url": "https://qul.tarteel.ai/resources/quran-metadata/70",
     "sha256": "ada09f674efd35d0c054c9b81c98d14550f6c66b77767a9173674799f675d7de",
-    "verifiedAt": "2026-11-24T21:16:27.036Z"
+    "verifiedAt": "2026-11-24T21:16:27.036Z",
+    "rightsReview": {
+      "reviewStatus": "unreviewed",
+      "rightsHolder": null,
+      "evidence": [],
+      "attribution": { "status": "unknown", "text": null },
+      "reviewerRole": null,
+      "reviewedAt": null,
+      "permissions": {
+        "publicDisplay": "unknown",
+        "redistribution": "unknown",
+        "offlineCaching": "unknown",
+        "commercialUse": "unknown"
+      }
+    }
   },
   "surahs": [
     {

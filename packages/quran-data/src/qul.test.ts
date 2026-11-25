@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { buildQulCorpus, SURAH_AYAH_COUNTS } from "./index";
+import { buildQulCorpus, SURAH_AYAH_COUNTS, UNKNOWN_QURAN_RIGHTS_REVIEW } from "./index";
 
 const source = {
   source: "Quranic Universal Library (QUL)",
   edition: "Uthmani Simple (Ayah by Ayah, Hafs, Me-Quran), resource 82",
   license: null,
-  rightsStatus: "unknown" as const,
   url: "https://qul.tarteel.ai/resources/quran-script/82",
   sha256: "a".repeat(64),
   verifiedAt: "2026-11-24T20:34:27.044Z",
+  rightsReview: UNKNOWN_QURAN_RIGHTS_REVIEW,
 };
 
 function makeQulExport() {

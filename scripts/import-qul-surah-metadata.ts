@@ -2,7 +2,13 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { strFromU8, unzipSync } from "fflate";
-import { buildQulSurahMetadata, type QuranSource } from "@muslim-ayat/quran-data";
+import {
+  buildQulSurahMetadata,
+  preserveQuranSourceRights,
+  QuranSurahMetadataSchema,
+  UNKNOWN_QURAN_RIGHTS_REVIEW,
+  type QuranSource,
+} from "@muslim-ayat/quran-data";
 
 const [archiveArgument] = process.argv.slice(2);
 const sourcePath = resolve("packages/quran-data/src/data/source/quran-metadata-surah-name.json");
@@ -23,15 +29,21 @@ try {
     sourceBytes = await readFile(sourcePath);
   }
 
-  const source: QuranSource = {
-    source: "Quranic Universal Library (QUL)",
-    edition: "Surah names - quran-metadata (Surah by Surah), resource 70",
-    license: null,
-    rightsStatus: "unknown",
-    url: "https://qul.tarteel.ai/resources/quran-metadata/70",
-    sha256: createHash("sha256").update(sourceBytes).digest("hex"),
-    verifiedAt: new Date().toISOString(),
-  };
+  const previousSource = QuranSurahMetadataSchema.parse(
+    JSON.parse(await readFile(metadataPath, "utf8")) as unknown,
+  ).source;
+  const source: QuranSource = preserveQuranSourceRights(
+    {
+      source: "Quranic Universal Library (QUL)",
+      edition: "Surah names - quran-metadata (Surah by Surah), resource 70",
+      license: null,
+      url: "https://qul.tarteel.ai/resources/quran-metadata/70",
+      sha256: createHash("sha256").update(sourceBytes).digest("hex"),
+      verifiedAt: new Date().toISOString(),
+      rightsReview: UNKNOWN_QURAN_RIGHTS_REVIEW,
+    },
+    previousSource,
+  );
   const metadata = buildQulSurahMetadata(JSON.parse(strFromU8(sourceBytes)) as unknown, source);
 
   await writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`, "utf8");

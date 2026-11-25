@@ -32,35 +32,37 @@ describe("Quran reader data access", () => {
     expect(getSurah(115)).toBeUndefined();
   });
 
-  it("includes the QUL metadata and header image sources with unknown rights status", () => {
+  it("includes each source and audio rights record exactly once", () => {
     const sources = getContentSources();
 
-    expect(sources).toHaveLength(7);
+    expect(sources).toHaveLength(13);
+    expect(new Set(sources.map((source) => source.id)).size).toBe(sources.length);
     expect(sources.find((source) => source.id === "qul-surah-metadata")).toMatchObject({
       kind: "surah-metadata",
-      source: {
-        edition: "Surah names - quran-metadata (Surah by Surah), resource 70",
-        rightsStatus: "unknown",
-      },
+      edition: "Surah names - quran-metadata (Surah by Surah), resource 70",
+      rightsReview: { reviewStatus: "unreviewed" },
+      integrity: { sha256: expect.any(String), verifiedAt: expect.any(String) },
     });
     expect(sources.find((source) => source.id === "qul-surah-headers")).toMatchObject({
       kind: "surah-header",
-      source: {
-        edition: expect.stringContaining("resource 592"),
-        attributionNote: expect.stringContaining("CC BY 4.0"),
-        rightsStatus: "unknown",
-      },
+      edition: expect.stringContaining("resource 592"),
+      attributionNote: expect.stringContaining("CC BY 4.0"),
+      rightsReview: { reviewStatus: "unreviewed" },
     });
     expect(sources.find((source) => source.id === "qul-abridged-explanation")).toMatchObject({
       kind: "tafsir",
-      source: {
-        rightsStatus: "unknown",
-        attributionNote: expect.stringContaining("could not be independently verified"),
-      },
+      attributionNote: expect.stringContaining("could not be independently verified"),
+      rightsReview: { reviewStatus: "unreviewed" },
     });
     expect(sources.find((source) => source.id === "english-word-by-word")).toMatchObject({
       kind: "word-by-word-translation",
-      source: { rightsStatus: "unknown", url: "https://qul.tarteel.ai/resources/translation/92" },
+      url: "https://qul.tarteel.ai/resources/translation/92",
+      rightsReview: { permissions: { redistribution: "unknown" } },
+    });
+    expect(sources.filter((source) => source.kind === "audio")).toHaveLength(6);
+    expect(sources.find((source) => source.id === "audio-provider-terms")).toMatchObject({
+      rightsReview: { reviewStatus: "unreviewed" },
+      integrity: null,
     });
   });
 

@@ -9,10 +9,23 @@
         "source": "Quranic Universal Library (QUL)",
         "edition": "Saheeh International, simple JSON, ayah-by-ayah (resource 193)",
         "license": null,
-        "rightsStatus": "unknown",
         "url": "https://qul.tarteel.ai/resources/translation/193",
         "sha256": "57df29716a55f6aa1f17c70f101872303f8b814ab7ba72f76993d9d5e3000750",
-        "verifiedAt": "2026-11-24T20:48:23.376Z"
+        "verifiedAt": "2026-11-24T20:48:23.376Z",
+        "rightsReview": {
+          "reviewStatus": "unreviewed",
+          "rightsHolder": null,
+          "evidence": [],
+          "attribution": { "status": "unknown", "text": null },
+          "reviewerRole": null,
+          "reviewedAt": null,
+          "permissions": {
+            "publicDisplay": "unknown",
+            "redistribution": "unknown",
+            "offlineCaching": "unknown",
+            "commercialUse": "unknown"
+          }
+        }
       },
       "verses": {
         "1:1": "In the name of Allāh, the Entirely Merciful, the Especially Merciful.",
@@ -6264,10 +6277,23 @@
         "source": "Quranic Universal Library (QUL)",
         "edition": "English Transliteration (Tajweed), simple JSON (resource export)",
         "license": null,
-        "rightsStatus": "unknown",
         "url": "https://qul.tarteel.ai/resources/transliteration",
         "sha256": "98ce770589a80700dc58e214100e3908b9c3512a47451d1746576de9e846517c",
-        "verifiedAt": "2026-11-24T20:48:23.376Z"
+        "verifiedAt": "2026-11-24T20:48:23.376Z",
+        "rightsReview": {
+          "reviewStatus": "unreviewed",
+          "rightsHolder": null,
+          "evidence": [],
+          "attribution": { "status": "unknown", "text": null },
+          "reviewerRole": null,
+          "reviewedAt": null,
+          "permissions": {
+            "publicDisplay": "unknown",
+            "redistribution": "unknown",
+            "offlineCaching": "unknown",
+            "commercialUse": "unknown"
+          }
+        }
       },
       "verses": {
         "1:1": "Bismil laahir Rahmaanir Raheem",

@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { SURAH_AYAH_COUNTS } from "./index";
+import {
+  QuranRightsReviewSchema,
+  SURAH_AYAH_COUNTS,
+  UNKNOWN_QURAN_RIGHTS_REVIEW,
+} from "./index";
 
 export const QuranAudioSourceSchema = z
   .object({
@@ -7,7 +11,7 @@ export const QuranAudioSourceSchema = z
     documentationUrl: z.literal("https://alquran.cloud/cdn"),
     cdnOrigin: z.literal("https://cdn.islamic.network"),
     delivery: z.literal("external-stream"),
-    rightsStatus: z.literal("unknown"),
+    providerTermsRightsReview: QuranRightsReviewSchema,
   })
   .strict();
 
@@ -16,7 +20,7 @@ export const QURAN_AUDIO_SOURCE = QuranAudioSourceSchema.parse({
   documentationUrl: "https://alquran.cloud/cdn",
   cdnOrigin: "https://cdn.islamic.network",
   delivery: "external-stream",
-  rightsStatus: "unknown",
+  providerTermsRightsReview: UNKNOWN_QURAN_RIGHTS_REVIEW,
 });
 
 export const QuranAudioReciterSchema = z
@@ -26,6 +30,7 @@ export const QuranAudioReciterSchema = z
     arabicName: z.string().min(1),
     style: z.enum(["Murattal", "Mujawwad"]),
     bitrate: z.union([z.literal(64), z.literal(128), z.literal(192)]),
+    recordingPerformanceRights: QuranRightsReviewSchema,
   })
   .strict();
 
@@ -36,6 +41,7 @@ export const QURAN_AUDIO_RECITERS = QuranAudioReciterSchema.array().parse([
     arabicName: "مشاري راشد العفاسي",
     style: "Murattal",
     bitrate: 128,
+    recordingPerformanceRights: UNKNOWN_QURAN_RIGHTS_REVIEW,
   },
   {
     identifier: "ar.husary",
@@ -43,6 +49,7 @@ export const QURAN_AUDIO_RECITERS = QuranAudioReciterSchema.array().parse([
     arabicName: "محمود خليل الحصري",
     style: "Murattal",
     bitrate: 128,
+    recordingPerformanceRights: UNKNOWN_QURAN_RIGHTS_REVIEW,
   },
   {
     identifier: "ar.minshawi",
@@ -50,6 +57,7 @@ export const QURAN_AUDIO_RECITERS = QuranAudioReciterSchema.array().parse([
     arabicName: "محمد صديق المنشاوي",
     style: "Murattal",
     bitrate: 128,
+    recordingPerformanceRights: UNKNOWN_QURAN_RIGHTS_REVIEW,
   },
   {
     identifier: "ar.sudais",
@@ -57,6 +65,7 @@ export const QURAN_AUDIO_RECITERS = QuranAudioReciterSchema.array().parse([
     arabicName: "عبدالرحمن السديس",
     style: "Murattal",
     bitrate: 192,
+    recordingPerformanceRights: UNKNOWN_QURAN_RIGHTS_REVIEW,
   },
   {
     identifier: "ar.abdulbasit",
@@ -64,6 +73,7 @@ export const QURAN_AUDIO_RECITERS = QuranAudioReciterSchema.array().parse([
     arabicName: "عبد الباسط عبد الصمد",
     style: "Murattal",
     bitrate: 192,
+    recordingPerformanceRights: UNKNOWN_QURAN_RIGHTS_REVIEW,
   },
 ]);
 
@@ -73,7 +83,10 @@ export function getGlobalAyahNumber(surahNumber: number, ayahNumber: number) {
     return undefined;
   }
 
-  return SURAH_AYAH_COUNTS.slice(0, surahNumber - 1).reduce((total, count) => total + count, 0) + ayahNumber;
+  return (
+    SURAH_AYAH_COUNTS.slice(0, surahNumber - 1).reduce((total, count) => total + count, 0) +
+    ayahNumber
+  );
 }
 
 export function getAyahAudioUrl(surahNumber: number, ayahNumber: number, identifier: string) {

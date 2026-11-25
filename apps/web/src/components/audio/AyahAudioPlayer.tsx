@@ -5,7 +5,9 @@ import { featureFlags } from "@/lib/features";
 import {
   getAyahAudioUrl,
   QURAN_AUDIO_RECITERS,
+  QURAN_AUDIO_SOURCE,
 } from "@muslim-ayat/quran-data/audio";
+import { RightsReviewDetails } from "@/components/quran/RightsReviewDetails";
 
 type AyahAudioPlayerProps = {
   surahNumber: number;
@@ -29,7 +31,7 @@ export function AyahAudioPlayer({
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioEnabled = featureFlags.audio;
-  const reciter = QURAN_AUDIO_RECITERS.find((item) => item.identifier === reciterId);
+  const reciter = QURAN_AUDIO_RECITERS.find((item) => item.identifier === reciterId) ?? QURAN_AUDIO_RECITERS[0]!;
   const audioUrl = getAyahAudioUrl(surahNumber, ayahNumber, reciterId);
   const unavailable = audioUrl !== undefined && failedUrl === audioUrl;
 
@@ -141,16 +143,24 @@ export function AyahAudioPlayer({
           ? "Audio streaming needs an internet connection and is not available offline."
           : unavailable
             ? "This stream is unavailable right now. Try another reciter or continue reading."
-            : `${reciter?.englishName ?? "Selected reciter"} streamed via AlQuran Cloud CDN. Rights status is unknown; audio is not bundled.`}
+            : `${reciter.englishName} streams via AlQuran Cloud CDN. No local audio is bundled; provider terms and recording/performance permissions are shown below.`}
       </p>
       <a
         className="mt-2 inline-block text-xs font-medium text-[var(--green)] underline underline-offset-2"
-        href="https://alquran.cloud/cdn"
+        href={QURAN_AUDIO_SOURCE.documentationUrl}
         rel="noreferrer"
         target="_blank"
       >
         AlQuran Cloud CDN source and format details
       </a>
+      <RightsReviewDetails
+        label="AlQuran Cloud CDN provider terms"
+        rightsReview={QURAN_AUDIO_SOURCE.providerTermsRightsReview}
+      />
+      <RightsReviewDetails
+        label={`${reciter.englishName} recording and performance rights`}
+        rightsReview={reciter.recordingPerformanceRights}
+      />
     </section>
   );
 }
