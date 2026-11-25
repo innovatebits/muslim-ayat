@@ -17,12 +17,8 @@ export default function SettingsPage() {
           ← Quran reader
         </Link>
         <nav aria-label="Account navigation" className="flex gap-4 text-sm">
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">
-            Bookmarks
-          </Link>
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/account">
-            Account
-          </Link>
+          {featureFlags.bookmarks || featureFlags.notes ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">Saved items</Link> : null}
+          {featureFlags.accountProfile || featureFlags.bookmarks || featureFlags.notes || featureFlags.readingProgress ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/account">Account</Link> : null}
         </nav>
       </header>
       {featureFlags.readerPreferences ? <ReaderSettings /> : null}
