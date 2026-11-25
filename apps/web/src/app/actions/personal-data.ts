@@ -7,6 +7,7 @@ import {
   ProfilePreferencesSchema,
 } from "@muslim-ayat/shared";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { isFeatureEnabled } from "@/lib/features";
 import { requireUser } from "@/lib/supabase/require-user";
 
 function getString(formData: FormData, name: string) {
@@ -34,6 +35,7 @@ function revalidatePersonalViews(surahNumber?: number) {
 }
 
 export async function updateProfileAction(formData: FormData) {
+  if (!isFeatureEnabled("accountProfile")) redirect("/account?error=feature-disabled");
   const parsed = ProfilePreferencesSchema.safeParse({
     preferredLanguage: getString(formData, "preferredLanguage"),
   });
@@ -50,6 +52,7 @@ export async function updateProfileAction(formData: FormData) {
 }
 
 export async function deleteBookmarkAction(formData: FormData) {
+  if (!isFeatureEnabled("bookmarks")) redirect("/bookmarks?error=feature-disabled");
   const recordId = PersonalRecordIdSchema.safeParse({ id: getString(formData, "id") });
   if (!recordId.success) redirect("/bookmarks?error=invalid");
 
@@ -78,6 +81,7 @@ export async function deleteBookmarkAction(formData: FormData) {
 }
 
 export async function deleteNoteAction(formData: FormData) {
+  if (!isFeatureEnabled("notes")) redirect("/bookmarks?error=feature-disabled");
   const recordId = PersonalRecordIdSchema.safeParse({ id: getString(formData, "id") });
   if (!recordId.success) redirect("/account?error=invalid");
 

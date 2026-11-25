@@ -198,9 +198,9 @@ test("reading preferences persist and control the reader", async ({ page }) => {
   await expect(page.getByLabel("Show English transliteration")).not.toBeChecked();
   await expect(page.getByLabel("Translation", { exact: true })).toHaveValue("none");
   await page.getByRole("button", { name: "Sync preferences across devices" }).click();
-  await expect(page.getByText("Sign in to save bookmarks, notes, reading progress and preferences across devices.")).toBeVisible();
+  await expect(page.getByText("Sign in to save the personal features enabled on this deployment across devices.")).toBeVisible();
   await page.getByRole("button", { name: "Continue reading as guest" }).click();
-  await expect(page.getByText("Sign in to save bookmarks, notes, reading progress and preferences across devices.")).toHaveCount(0);
+  await expect(page.getByText("Sign in to save the personal features enabled on this deployment across devices.")).toHaveCount(0);
 
   await page.goto("/surah/1");
   await expect(page.locator('[data-reading-mode="mushaf"]')).toBeVisible();
@@ -237,10 +237,10 @@ test("guest reading works offline and personal saves ask for sign-in without blo
   await expect(page.getByRole("heading", { name: "Al-Fātiĥah" })).toBeVisible();
   await context.setOffline(true);
   await page.getByRole("button", { name: "Save bookmark" }).click();
-  await expect(page.getByText("Sign in to save bookmarks, notes, reading progress and preferences across devices.")).toBeVisible();
+  await expect(page.getByText("Sign in to save the personal features enabled on this deployment across devices.")).toBeVisible();
   await expect(page.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
   await page.getByRole("button", { name: "Continue reading as guest" }).click();
-  await expect(page.getByText("Sign in to save bookmarks, notes, reading progress and preferences across devices.")).toHaveCount(0);
+  await expect(page.getByText("Sign in to save the personal features enabled on this deployment across devices.")).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Remove bookmark" })).toHaveCount(0);
   const personalRecordCounts = await page.evaluate(async () => {
     const database = await new Promise<IDBDatabase>((resolve, reject) => {

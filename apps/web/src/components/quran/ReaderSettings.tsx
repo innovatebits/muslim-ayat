@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { featureFlags } from "@/lib/features";
 import {
   useReaderPreferences,
   type ReaderPreferences,
@@ -49,6 +50,7 @@ export function ReaderSettings() {
               </span>
             </span>
           </label>
+          {featureFlags.mushafLayout ? (
           <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[var(--line)] p-4">
             <input
               checked={preferences.readingMode === "mushaf"}
@@ -64,10 +66,12 @@ export function ReaderSettings() {
               </span>
             </span>
           </label>
+          ) : null}
         </div>
       </fieldset>
 
       <div className="grid gap-6 sm:grid-cols-2">
+        {featureFlags.translations ? (
         <label className="rounded-2xl border border-[var(--line)] bg-white/80 p-5">
           <span className="block text-sm font-semibold text-[var(--green)]">Translation</span>
           <select
@@ -88,7 +92,9 @@ export function ReaderSettings() {
             More attributed translations may be offered in future releases.
           </span>
         </label>
+        ) : null}
 
+        {featureFlags.transliteration ? (
         <label className="flex items-start gap-3 rounded-2xl border border-[var(--line)] bg-white/80 p-5">
           <input
             checked={preferences.showTransliteration}
@@ -105,6 +111,7 @@ export function ReaderSettings() {
             </span>
           </span>
         </label>
+        ) : null}
       </div>
 
       <label className="block max-w-sm rounded-2xl border border-[var(--line)] bg-white/80 p-5">
@@ -148,7 +155,7 @@ export function ReaderSettings() {
               Want to personalize your experience?
             </h2>
             <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              Sign in to save bookmarks, notes, reading progress and preferences across devices.
+              Sign in to save the personal features enabled on this deployment across devices.
             </p>
             <div className="mt-3 flex flex-wrap items-center gap-3">
               <Link className="rounded-full bg-[var(--green)] px-4 py-2 text-sm font-medium text-white" href="/sign-in">

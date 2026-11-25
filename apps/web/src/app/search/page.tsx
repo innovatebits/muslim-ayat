@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { featureFlags } from "@/lib/features";
 import { searchQuran } from "@muslim-ayat/quran-data/reader";
 
 export const metadata: Metadata = {
@@ -12,6 +14,7 @@ export default async function SearchPage({
 }: {
   searchParams: Promise<{ q?: string | string[] }>;
 }) {
+  if (!featureFlags.search) notFound();
   const params = await searchParams;
   const query = typeof params.q === "string" ? params.q.trim() : "";
   const results = query ? searchQuran(query) : [];
@@ -76,12 +79,12 @@ export default async function SearchPage({
                     >
                       {result.textUthmani}
                     </p>
-                    {result.transliteration ? (
+                    {featureFlags.transliteration && result.transliteration ? (
                       <p className="mt-3 text-sm text-[#49715d]" lang="en-Latn">
                         {result.transliteration}
                       </p>
                     ) : null}
-                    {result.translation ? (
+                    {featureFlags.translations && result.translation ? (
                       <p className="mt-2 text-sm leading-6 text-[var(--ink)]">{result.translation}</p>
                     ) : null}
                     <Link

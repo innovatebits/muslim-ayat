@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ContentSources } from "@/components/quran/ContentSources";
 import { FutureReleaseNote } from "@/components/quran/FutureReleaseNote";
 import { getSurahIndex } from "@muslim-ayat/quran-data/reader";
+import { featureFlags } from "@/lib/features";
 
 export const metadata: Metadata = {
   title: "Quran reader",
@@ -19,18 +20,10 @@ export default function QuranPage() {
           Muslim Ayat
         </Link>
         <nav aria-label="Reader navigation" className="flex flex-wrap items-center gap-5 text-sm">
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/search">
-            Search
-          </Link>
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/settings">
-            Reading settings
-          </Link>
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">
-            Bookmarks
-          </Link>
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/account">
-            Account
-          </Link>
+          {featureFlags.search ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/search">Search</Link> : null}
+          {featureFlags.readerPreferences ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/settings">Reading settings</Link> : null}
+          {featureFlags.bookmarks || featureFlags.notes ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">Saved items</Link> : null}
+          {featureFlags.accountProfile || featureFlags.bookmarks || featureFlags.notes || featureFlags.readingProgress ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/account">Account</Link> : null}
         </nav>
       </header>
 
@@ -42,9 +35,9 @@ export default function QuranPage() {
           The Quran
         </h1>
         <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--muted)]">
-          Browse QUL Uthmani text alongside the Saheeh International translation and English
-          transliteration. Source and rights information is shown with each edition.
+          Browse the Quran in its original Arabic script{featureFlags.translations ? ", with translation" : ""}{featureFlags.transliteration ? " and transliteration" : ""}. Source and rights information is shown with each edition.
         </p>
+        {featureFlags.search ? (
         <form action="/search" className="mt-7 flex max-w-xl gap-3" method="get" role="search">
           <label className="sr-only" htmlFor="quran-search">
             Search Arabic, translation, or transliteration
@@ -63,6 +56,7 @@ export default function QuranPage() {
             Search
           </button>
         </form>
+        ) : null}
       </section>
 
       <section aria-labelledby="surah-index-heading" className="border-t border-[var(--line)] py-10">
@@ -78,9 +72,7 @@ export default function QuranPage() {
               Choose a surah
             </h2>
           </div>
-          <Link className="text-sm font-medium text-[var(--green)] hover:underline" href="/settings">
-            Reading preferences
-          </Link>
+          {featureFlags.readerPreferences ? <Link className="text-sm font-medium text-[var(--green)] hover:underline" href="/settings">Reading preferences</Link> : null}
         </div>
         <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {surahs.map((surah) => (

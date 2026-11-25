@@ -3,6 +3,8 @@ import Link from "next/link";
 import { deleteBookmarkAction, deleteNoteAction } from "@/app/actions/personal-data";
 import { getSurahIndex } from "@muslim-ayat/quran-data/reader";
 import { getPersonalData } from "@/lib/personal-data";
+import { featureFlags } from "@/lib/features";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BookmarksPage() {
+  if (!featureFlags.bookmarks && !featureFlags.notes) notFound();
   const personalData = await getPersonalData();
   const surahs = getSurahIndex();
 
@@ -41,6 +44,7 @@ export default async function BookmarksPage() {
           </div>
         ) : (
           <div className="mt-6 grid gap-8 md:grid-cols-2">
+            {featureFlags.bookmarks ? (
             <section>
               <h2 className="text-xl font-semibold text-[var(--green)]">Bookmarks</h2>
               {personalData.bookmarks.length ? (
@@ -66,7 +70,9 @@ export default async function BookmarksPage() {
                 <p className="mt-3 text-sm text-[var(--muted)]">No bookmarks yet. Save an ayah from the reader.</p>
               )}
             </section>
+            ) : null}
 
+            {featureFlags.notes ? (
             <section>
               <h2 className="text-xl font-semibold text-[var(--green)]">Notes</h2>
               {personalData.notes.length ? (
@@ -95,6 +101,7 @@ export default async function BookmarksPage() {
                 <p className="mt-3 text-sm text-[var(--muted)]">No notes yet. Add a private note from an ayah.</p>
               )}
             </section>
+            ) : null}
           </div>
         )}
       </section>

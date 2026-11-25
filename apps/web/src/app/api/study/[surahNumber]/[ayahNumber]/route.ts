@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import { getStudyAyah } from "@muslim-ayat/quran-data/study";
+import { featureFlags } from "@/lib/features";
 
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ surahNumber: string; ayahNumber: string }> },
 ) {
+  if (!featureFlags.tafsir && !featureFlags.wordByWord) return new NextResponse(null, { status: 404 });
   const { surahNumber: surahValue, ayahNumber: ayahValue } = await params;
   if (!/^\d+$/u.test(surahValue) || !/^\d+$/u.test(ayahValue)) {
     return new NextResponse(null, { status: 404 });

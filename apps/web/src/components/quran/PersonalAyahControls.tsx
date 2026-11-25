@@ -14,6 +14,7 @@ import {
   type OfflineNoteRecord,
 } from "@/lib/offline/repository";
 import { synchronizeOfflineData } from "@/lib/offline/sync";
+import { featureFlags } from "@/lib/features";
 
 type OfflineStatus = "loading" | "local-only" | "pending" | "syncing" | "synced" | "error";
 
@@ -179,84 +180,38 @@ export function PersonalAyahControls({
         Personal actions · Ayah {ayahNumber}
       </p>
       <div className="mt-3 flex flex-wrap items-center gap-3">
-        <button
-          className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--green)] disabled:opacity-50"
-          disabled={status === "loading"}
-          onClick={() => {
-            if (!isAuthenticated) {
-              setShowAccountPrompt(true);
-              return;
-            }
-            void saveAndSync((activeOwnerId) =>
-              saveLocalBookmark(activeOwnerId, surahNumber, ayahNumber, Boolean(bookmark)),
-            );
-          }}
-          type="button"
-        >
-          {bookmark ? "Remove bookmark" : "Save bookmark"}
-        </button>
-        <button
-          className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--green)] disabled:opacity-50"
-          disabled={status === "loading"}
-          onClick={() => {
-            if (!isAuthenticated) {
-              setShowAccountPrompt(true);
-              return;
-            }
+        {featureFlags.bookmarks ? (
+          <button className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--green)] disabled:opacity-50" disabled={status === "loading"} onClick={() => {
+            if (!isAuthenticated) { setShowAccountPrompt(true); return; }
+            void saveAndSync((activeOwnerId) => saveLocalBookmark(activeOwnerId, surahNumber, ayahNumber, Boolean(bookmark)));
+          }} type="button">{bookmark ? "Remove bookmark" : "Save bookmark"}</button>
+        ) : null}
+        {featureFlags.readingProgress ? (
+          <button className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--green)] disabled:opacity-50" disabled={status === "loading"} onClick={() => {
+            if (!isAuthenticated) { setShowAccountPrompt(true); return; }
             void saveAndSync((activeOwnerId) => saveLocalProgress(activeOwnerId, surahNumber, ayahNumber));
-          }}
-          type="button"
-        >
-          Save reading position
-        </button>
-        <button
-          aria-expanded={isAuthenticated && notesOpen}
-          className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--green)]"
-          onClick={() => {
-            if (!isAuthenticated) {
-              setShowAccountPrompt(true);
-              return;
-            }
+          }} type="button">Save reading position</button>
+        ) : null}
+        {featureFlags.notes ? (
+          <button aria-expanded={isAuthenticated && notesOpen} className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-[var(--green)]" onClick={() => {
+            if (!isAuthenticated) { setShowAccountPrompt(true); return; }
             setNotesOpen((open) => !open);
-          }}
-          type="button"
-        >
-          Notes ({ayahNotes.length})
-        </button>
-        {isAuthenticated && notesOpen ? (
+          }} type="button">Notes ({ayahNotes.length})</button>
+        ) : null}
+        {featureFlags.notes && isAuthenticated && notesOpen ? (
           <div className="mt-3 w-full min-w-64 space-y-3">
             {ayahNotes.map((note) => (
               <div key={note.clientId} className="rounded-lg bg-[#f7f6ef] p-3">
                 <p className="whitespace-pre-wrap text-sm text-[var(--ink)]">{note.content}</p>
-                <button
-                  className="mt-2 text-xs font-medium text-[var(--muted)] hover:text-rose-700"
-                  onClick={() => void saveAndSync(() => deleteLocalNote(note))}
-                  type="button"
-                >
-                  Delete note
-                </button>
+                <button className="mt-2 text-xs font-medium text-[var(--muted)] hover:text-rose-700" onClick={() => void saveAndSync(() => deleteLocalNote(note))} type="button">Delete note</button>
               </div>
             ))}
             <form className="space-y-2" onSubmit={handleAddNote}>
               <label className="block text-xs font-medium text-[var(--ink)]" htmlFor={`note-${surahNumber}-${ayahNumber}`}>
                 Add a private note
-                <textarea
-                  className="mt-1 block w-full rounded-lg border border-[var(--line)] bg-white p-2 text-sm"
-                  id={`note-${surahNumber}-${ayahNumber}`}
-                  maxLength={10_000}
-                  onChange={(event) => setNoteDraft(event.currentTarget.value)}
-                  required
-                  rows={3}
-                  value={noteDraft}
-                />
+                <textarea className="mt-1 block w-full rounded-lg border border-[var(--line)] bg-white p-2 text-sm" id={`note-${surahNumber}-${ayahNumber}`} maxLength={10_000} onChange={(event) => setNoteDraft(event.currentTarget.value)} required rows={3} value={noteDraft} />
               </label>
-              <button
-                className="rounded-full bg-[var(--green)] px-4 py-2 text-xs font-medium text-white disabled:opacity-50"
-                disabled={status === "loading"}
-                type="submit"
-              >
-                Save note
-              </button>
+              <button className="rounded-full bg-[var(--green)] px-4 py-2 text-xs font-medium text-white disabled:opacity-50" disabled={status === "loading"} type="submit">Save note</button>
             </form>
           </div>
         ) : null}
@@ -276,7 +231,7 @@ export function PersonalAyahControls({
             Want to personalize your experience?
           </h2>
           <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-            Sign in to save bookmarks, notes, reading progress and preferences across devices.
+            Sign in to save the personal features enabled on this deployment across devices.
           </p>
           <div className="mt-3 flex flex-wrap items-center gap-3">
             <Link className="rounded-full bg-[var(--green)] px-4 py-2 text-sm font-medium text-white" href="/sign-in">

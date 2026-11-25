@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ContentSources } from "@/components/quran/ContentSources";
 import { ReaderSettings } from "@/components/quran/ReaderSettings";
+import { featureFlags } from "@/lib/features";
 
 export const metadata: Metadata = {
   title: "Reading settings",
@@ -16,15 +17,11 @@ export default function SettingsPage() {
           ← Quran reader
         </Link>
         <nav aria-label="Account navigation" className="flex gap-4 text-sm">
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">
-            Bookmarks
-          </Link>
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/account">
-            Account
-          </Link>
+          {featureFlags.bookmarks || featureFlags.notes ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">Saved items</Link> : null}
+          {featureFlags.accountProfile || featureFlags.bookmarks || featureFlags.notes || featureFlags.readingProgress ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/account">Account</Link> : null}
         </nav>
       </header>
-      <ReaderSettings />
+      {featureFlags.readerPreferences ? <ReaderSettings /> : null}
       <div className="mt-10">
         <ContentSources />
       </div>

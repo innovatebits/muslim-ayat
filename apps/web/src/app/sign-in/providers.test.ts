@@ -1,16 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { isSocialAuthProvider, socialAuthProviders } from "./providers";
+import { getEnabledSocialAuthProviders, isSocialAuthProvider, socialAuthProviders } from "./providers";
 
 describe("social sign-in providers", () => {
-  it("offers Google, Microsoft, and Facebook only", () => {
+  it("defines Google, Microsoft and Facebook with independent feature flags", () => {
     expect(socialAuthProviders).toEqual([
-      { id: "google", name: "Google" },
-      { id: "azure", name: "Microsoft" },
-      { id: "facebook", name: "Facebook" },
+      { id: "google", name: "Google", feature: "authGoogle" },
+      { id: "azure", name: "Microsoft", feature: "authMicrosoft" },
+      { id: "facebook", name: "Facebook", feature: "authFacebook" },
     ]);
   });
 
-  it("recognizes only configured provider identifiers", () => {
+  it("enables configured providers by default and rejects unknown identifiers", () => {
+    expect(getEnabledSocialAuthProviders().map(({ id }) => id)).toEqual(["google", "azure", "facebook"]);
     expect(isSocialAuthProvider("google")).toBe(true);
     expect(isSocialAuthProvider("azure")).toBe(true);
     expect(isSocialAuthProvider("facebook")).toBe(true);

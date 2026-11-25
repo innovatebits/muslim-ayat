@@ -18,4 +18,9 @@ port = 54323
 [auth]
 enabled = true
 site_url = "http://localhost:3000"
-additional_redirect_urls = ["http://127.0.0.1:3000", "http://localhost:3000/auth/callback", "http://127.0.0.1:3000/auth/callback"]
+additional_redirect_urls = ["http://127.0.0.1:3000", "http://localhost:3000/**", "http://127.0.0.1:3000/**"]
+[auth.email]
+enable_signup = true
+enable_confirmations = true
+otp_length = 6
+otp_expiry = 3600

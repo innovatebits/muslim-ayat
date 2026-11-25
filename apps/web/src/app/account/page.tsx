@@ -5,6 +5,7 @@ import { updateProfileAction } from "@/app/actions/personal-data";
 import { getSurahIndex } from "@muslim-ayat/quran-data/reader";
 import { getPersonalData } from "@/lib/personal-data";
 import { getAccountIdentityLabel } from "@/lib/account-identity";
+import { featureFlags } from "@/lib/features";
 
 export const dynamic = "force-dynamic";
 
@@ -27,9 +28,7 @@ export default async function AccountPage() {
           ← Quran reader
         </Link>
         <nav aria-label="Account navigation" className="flex gap-4 text-sm">
-          <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">
-            Bookmarks
-          </Link>
+          {featureFlags.bookmarks || featureFlags.notes ? <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/bookmarks">Saved items</Link> : null}
           <Link className="text-[var(--muted)] hover:text-[var(--green)]" href="/sign-in">
             Sign in
           </Link>
@@ -69,6 +68,7 @@ export default async function AccountPage() {
               </form>
             </div>
 
+            {featureFlags.accountProfile ? (
             <form action={updateProfileAction} className="rounded-2xl border border-[var(--line)] bg-white/80 p-5 sm:p-7">
               <h2 className="text-lg font-semibold text-[var(--green)]">Profile preferences</h2>
               <label className="mt-4 block max-w-sm text-sm font-medium text-[var(--ink)]" htmlFor="preferred-language">
@@ -88,8 +88,10 @@ export default async function AccountPage() {
                 Save profile
               </button>
             </form>
+            ) : null}
 
             <section className="grid gap-6 md:grid-cols-2">
+              {featureFlags.readingProgress ? (
               <article className="rounded-2xl border border-[var(--line)] bg-white/80 p-5">
                 <h2 className="text-lg font-semibold text-[var(--green)]">Reading progress</h2>
                 {personalData.progress && progressSurah ? (
@@ -103,18 +105,21 @@ export default async function AccountPage() {
                   <p className="mt-3 text-sm text-[var(--muted)]">No reading position saved yet.</p>
                 )}
               </article>
+              ) : null}
+              {featureFlags.bookmarks || featureFlags.notes ? (
               <article className="rounded-2xl border border-[var(--line)] bg-white/80 p-5">
                 <h2 className="text-lg font-semibold text-[var(--green)]">Personal items</h2>
                 <p className="mt-3 text-sm text-[var(--muted)]">
-                  {personalData.bookmarks.length} bookmarks · {personalData.notes.length} recent notes
+                  {featureFlags.bookmarks ? `${personalData.bookmarks.length} bookmarks` : null}{featureFlags.bookmarks && featureFlags.notes ? " · " : null}{featureFlags.notes ? `${personalData.notes.length} recent notes` : null}
                 </p>
                 <Link className="mt-3 inline-block text-sm font-medium text-[var(--green)] hover:underline" href="/bookmarks">
-                  Manage bookmarks and notes
+                  Manage saved items
                 </Link>
               </article>
+              ) : null}
             </section>
 
-            {personalData.notes.length ? (
+            {featureFlags.notes && personalData.notes.length ? (
               <section className="rounded-2xl border border-[var(--line)] bg-white/80 p-5">
                 <h2 className="text-lg font-semibold text-[var(--green)]">Recent notes</h2>
                 <ul className="mt-4 space-y-3">
